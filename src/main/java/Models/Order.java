@@ -4,109 +4,113 @@
  */
 package Models;
 
-import java.util.Date;
+import DAOs.CartDAO;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 /**
  *
- * @author nguye
+ * @author HIEU
  */
-public class Order {    
-    private int od_id;
-    private Date or_date;
-    private String or_status;
-    private String or_name;
-    private String or_totalMoney;
-    private String or_phoneNumber;
-    private String or_email;
-    private String or_address;
-    private int user_id;
+public class Order {
+
+    private int order_id;
+    private String username;
+    private Date order_date;
+    private String order_status;
+    private String order_name;
+    private int order_totalMoney;
+    private String order_phone;
+    private String order_email;
+    private String order_address;
 
     public Order() {
     }
 
-    public Order(int od_id, Date or_date, String or_status, String or_name, String or_totalMoney, String or_phoneNumber, String or_email, String or_address, int user_id) {
-        this.od_id = od_id;
-        this.or_date = or_date;
-        this.or_status = or_status;
-        this.or_name = or_name;
-        this.or_totalMoney = or_totalMoney;
-        this.or_phoneNumber = or_phoneNumber;
-        this.or_email = or_email;
-        this.or_address = or_address;
-        this.user_id = user_id;
+    public Order(int order_id, String username, String order_status, String order_name, int order_totalMoney, String order_phone, String order_email, String order_address) {
+        this.order_id = order_id;
+        this.username = username;
+        this.order_status = order_status;
+        this.order_name = order_name;
+        this.order_totalMoney = order_totalMoney;
+        this.order_phone = order_phone;
+        this.order_email = order_email;
+        this.order_address = order_address;
     }
 
-    public int getOd_id() {
-        return od_id;
+    public int getOrder_id() {
+        return order_id;
     }
 
-    public void setOd_id(int od_id) {
-        this.od_id = od_id;
+    public void setOrder_id(int order_id) {
+        this.order_id = order_id;
     }
 
-    public Date getOr_date() {
-        return or_date;
+    public String getUsername() {
+        return username;
     }
 
-    public void setOr_date(Date or_date) {
-        this.or_date = or_date;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getOr_status() {
-        return or_status;
+    public Date getOrder_date() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        java.sql.Date sqlDate = new java.sql.Date(Long.parseLong(dateFormat.format(order_date)));
+        return sqlDate;
     }
 
-    public void setOr_status(String or_status) {
-        this.or_status = or_status;
+    public void setOrder_date(Date order_date) {
+        this.order_date = order_date;
     }
 
-    public String getOr_name() {
-        return or_name;
+    public String getOrder_status() {
+
+        return order_status;
     }
 
-    public void setOr_name(String or_name) {
-        this.or_name = or_name;
+    public void setOrder_status(String order_status) {
+        this.order_status = order_status;
     }
 
-    public String getOr_totalMoney() {
-        return or_totalMoney;
+    public String getOrder_name() {
+        return order_name;
     }
 
-    public void setOr_totalMoney(String or_totalMoney) {
-        this.or_totalMoney = or_totalMoney;
+    public void setOrder_name(String order_name) {
+        this.order_name = order_name;
     }
 
-    public String getOr_phoneNumber() {
-        return or_phoneNumber;
+    public int getOrder_totalMoney() {
+        return order_totalMoney;
     }
 
-    public void setOr_phoneNumber(String or_phoneNumber) {
-        this.or_phoneNumber = or_phoneNumber;
+    public void setOrder_totalMoney(int order_totalMoney) {
+        this.order_totalMoney = order_totalMoney;
     }
 
-    public String getOr_email() {
-        return or_email;
+    public String getOrder_phone() {
+        return order_phone;
     }
 
-    public void setOr_email(String or_email) {
-        this.or_email = or_email;
+    public void setOrder_phone(String order_phone) {
+        this.order_phone = order_phone;
     }
 
-    public String getOr_address() {
-        return or_address;
+    public String getOrder_email() {
+        return order_email;
     }
 
-    public void setOr_address(String or_address) {
-        this.or_address = or_address;
+    public void setOrder_email(String order_email) {
+        this.order_email = order_email;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public String getOrder_address() {
+        return order_address;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setOrder_address(String order_address) {
+        this.order_address = order_address;
     }
 
-    
 }

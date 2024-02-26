@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>Filters.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <servlet-name>LoginController</servlet-name>
+    </filter-mapping>
     <servlet>
         <servlet-name>HomeController</servlet-name>
         <servlet-class>Controllers.HomeController</servlet-class>
@@ -34,11 +42,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProductController</servlet-name>
-        <url-pattern>/ProductController</url-pattern>
+        <url-pattern>/ProductController/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
-        <url-pattern>/LoginController</url-pattern>
+        <url-pattern>/LoginController/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>

@@ -6,9 +6,10 @@ package Models;
 
 /**
  *
- * @author nguye
+ * @author HIEU
  */
 public class Account {
+
     private int acc_id;
     private String gmail;
     private String password;

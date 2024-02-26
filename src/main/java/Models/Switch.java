@@ -6,86 +6,86 @@ package Models;
 
 /**
  *
- * @author nguye
+ * @author HIEU
  */
 public class Switch {
-    private int sw_id;
-    private String sw_pin;
-    private String sw_type;
-    private String sw_spring;
-    private String sw_reliability;
-    private String sw_depth;
-    private int pro_id;
+
+    private int switch_id;
+    private String switch_pin;
+    private String switch_type;
+    private String switch_spring;
+    private String switch_reliability;
+    private String switch_depth;
+    private Product pro_id;
 
     public Switch() {
     }
 
-    public Switch(int sw_id, String sw_pin, String sw_type, String sw_spring, String sw_reliability, String sw_depth, int pro_id) {
-        this.sw_id = sw_id;
-        this.sw_pin = sw_pin;
-        this.sw_type = sw_type;
-        this.sw_spring = sw_spring;
-        this.sw_reliability = sw_reliability;
-        this.sw_depth = sw_depth;
+    public Switch(int switch_id, String switch_pin, String switch_type, String switch_spring, String switch_reliability, String switch_depth, Product pro_id) {
+        this.switch_id = switch_id;
+        this.switch_pin = switch_pin;
+        this.switch_type = switch_type;
+        this.switch_spring = switch_spring;
+        this.switch_reliability = switch_reliability;
+        this.switch_depth = switch_depth;
         this.pro_id = pro_id;
     }
 
-    public int getSw_id() {
-        return sw_id;
+    public int getSwitch_id() {
+        return switch_id;
     }
 
-    public void setSw_id(int sw_id) {
-        this.sw_id = sw_id;
+    public void setSwitch_id(int switch_id) {
+        this.switch_id = switch_id;
     }
 
-    public String getSw_pin() {
-        return sw_pin;
+    public String getSwitch_pin() {
+        return switch_pin;
     }
 
-    public void setSw_pin(String sw_pin) {
-        this.sw_pin = sw_pin;
+    public void setSwitch_pin(String switch_pin) {
+        this.switch_pin = switch_pin;
     }
 
-    public String getSw_type() {
-        return sw_type;
+    public String getSwitch_type() {
+        return switch_type;
     }
 
-    public void setSw_type(String sw_type) {
-        this.sw_type = sw_type;
+    public void setSwitch_type(String switch_type) {
+        this.switch_type = switch_type;
     }
 
-    public String getSw_spring() {
-        return sw_spring;
+    public String getSwitch_spring() {
+        return switch_spring;
     }
 
-    public void setSw_spring(String sw_spring) {
-        this.sw_spring = sw_spring;
+    public void setSwitch_spring(String switch_spring) {
+        this.switch_spring = switch_spring;
     }
 
-    public String getSw_reliability() {
-        return sw_reliability;
+    public String getSwitch_reliability() {
+        return switch_reliability;
     }
 
-    public void setSw_reliability(String sw_reliability) {
-        this.sw_reliability = sw_reliability;
+    public void setSwitch_reliability(String switch_reliability) {
+        this.switch_reliability = switch_reliability;
     }
 
-    public String getSw_depth() {
-        return sw_depth;
+    public String getSwitch_depth() {
+        return switch_depth;
     }
 
-    public void setSw_depth(String sw_depth) {
-        this.sw_depth = sw_depth;
+    public void setSwitch_depth(String switch_depth) {
+        this.switch_depth = switch_depth;
     }
 
-    public int getPro_id() {
+    public Product getPro_id() {
         return pro_id;
     }
 
-    public void setPro_id(int pro_id) {
+    public void setPro_id(Product pro_id) {
         this.pro_id = pro_id;
     }
-    
-    
+
     
 }

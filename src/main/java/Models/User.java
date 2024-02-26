@@ -9,6 +9,7 @@ package Models;
  * @author nguye
  */
 public class User {
+
     private int user_id;
     private String user_fullName;
     private String user_phoneNumber;
@@ -65,6 +66,6 @@ public class User {
     public void setAcc_id(int acc_id) {
         this.acc_id = acc_id;
     }
-    
+
     
 }
