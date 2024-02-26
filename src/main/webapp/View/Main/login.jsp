@@ -79,7 +79,8 @@
                                 </div>
                             </form>
                             <div class="col">
-                                <a href="#" class="google btn"
+                                <a href="https://accounts.google.com/o/oauth2/auth?scope=profile%20email&redirect_uri=http://localhost:9999/LoginController&response_type=code
+                                   &client_id=788088430920-nlojm5al4l4r6bn5brgrvj8pu5be9ob4.apps.googleusercontent.com&approval_prompt=force" class="google btn"
                                    ><i class="fa-brands fa-google-plus-g" style="font-size: 22px"></i> Login with Google+
                                 </a>
                             </div>

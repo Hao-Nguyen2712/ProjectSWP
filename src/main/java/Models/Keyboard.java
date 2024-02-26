@@ -6,95 +6,96 @@ package Models;
 
 /**
  *
- * @author Laptop
+ * @author nguye
  */
 public class Keyboard {
-
-    private int keyboard_id;
-    private String led;
-    private String mode;
-    private String Switch;
-    private String keycap;
-    private String plate;
-    private String Case;
-    private Product pro_id;
+    private int kb_id;
+    private String kb_led;
+    private String kb_mode;
+    private String kb_switch;
+    private String kb_keycap;
+    private String kb_plate;
+    private String kb_case;
+    private int pro_id;
 
     public Keyboard() {
     }
 
-    public Keyboard(int keyboard_id, String led, String mode, String Switch, String keycap, String plate, String Case, Product pro_id) {
-        this.keyboard_id = keyboard_id;
-        this.led = led;
-        this.mode = mode;
-        this.Switch = Switch;
-        this.keycap = keycap;
-        this.plate = plate;
-        this.Case = Case;
+    public Keyboard(int kb_id, String kb_led, String kb_mode, String kb_switch, String kb_keycap, String kb_plate, String kb_case, int pro_id) {
+        this.kb_id = kb_id;
+        this.kb_led = kb_led;
+        this.kb_mode = kb_mode;
+        this.kb_switch = kb_switch;
+        this.kb_keycap = kb_keycap;
+        this.kb_plate = kb_plate;
+        this.kb_case = kb_case;
         this.pro_id = pro_id;
     }
 
-    public int getKeyboard_id() {
-        return keyboard_id;
+    public int getKb_id() {
+        return kb_id;
     }
 
-    public void setKeyboard_id(int keyboard_id) {
-        this.keyboard_id = keyboard_id;
+    public void setKb_id(int kb_id) {
+        this.kb_id = kb_id;
     }
 
-    public String getLed() {
-        return led;
+    public String getKb_led() {
+        return kb_led;
     }
 
-    public void setLed(String led) {
-        this.led = led;
+    public void setKb_led(String kb_led) {
+        this.kb_led = kb_led;
     }
 
-    public String getMode() {
-        return mode;
+    public String getKb_mode() {
+        return kb_mode;
     }
 
-    public void setMode(String mode) {
-        this.mode = mode;
+    public void setKb_mode(String kb_mode) {
+        this.kb_mode = kb_mode;
     }
 
-    public String getSwitch() {
-        return Switch;
+    public String getKb_switch() {
+        return kb_switch;
     }
 
-    public void setSwitch(String Switch) {
-        this.Switch = Switch;
+    public void setKb_switch(String kb_switch) {
+        this.kb_switch = kb_switch;
     }
 
-    public String getKeycap() {
-        return keycap;
+    public String getKb_keycap() {
+        return kb_keycap;
     }
 
-    public void setKeycap(String keycap) {
-        this.keycap = keycap;
+    public void setKb_keycap(String kb_keycap) {
+        this.kb_keycap = kb_keycap;
     }
 
-    public String getPlate() {
-        return plate;
+    public String getKb_plate() {
+        return kb_plate;
     }
 
-    public void setPlate(String plate) {
-        this.plate = plate;
+    public void setKb_plate(String kb_plate) {
+        this.kb_plate = kb_plate;
     }
 
-    public String getCase() {
-        return Case;
+    public String getKb_case() {
+        return kb_case;
     }
 
-    public void setCase(String Case) {
-        this.Case = Case;
+    public void setKb_case(String kb_case) {
+        this.kb_case = kb_case;
     }
 
-    public Product getPro_id() {
+    public int getPro_id() {
         return pro_id;
     }
 
-    public void setPro_id(Product pro_id) {
+    public void setPro_id(int pro_id) {
         this.pro_id = pro_id;
     }
-
+    
+    
+    
 }

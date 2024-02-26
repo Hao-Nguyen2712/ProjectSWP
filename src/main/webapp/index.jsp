@@ -62,7 +62,8 @@ Author     : Laptop
 
 
     <body>
-        <%            ProductDAO proDAO = new ProductDAO();
+        <%            
+            ProductDAO proDAO = new ProductDAO();
             ResultSet rs = proDAO.getNewProduct();
             String lower_name = "";
             KeyboardDAO kDAO = new KeyboardDAO();

@@ -4,11 +4,11 @@
  */
 package Models;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
- * @author HIEU
+ * @author nguye
  */
 public class Product {
 
@@ -19,13 +19,15 @@ public class Product {
     private String pro_image;
     private String pro_description;
     private String pro_discount;
+    private Date pro_date;
     private String pro_category;
-    
+    private String pro_brand;
+    private String pro_origin;
 
     public Product() {
     }
 
-    public Product(int pro_id, String pro_name, int pro_quantity, String pro_price, String pro_image, String pro_description, String pro_discount, String pro_category) {
+    public Product(int pro_id, String pro_name, int pro_quantity, String pro_price, String pro_image, String pro_description, String pro_discount, Date pro_date, String pro_category, String pro_brand, String pro_origin) {
         this.pro_id = pro_id;
         this.pro_name = pro_name;
         this.pro_quantity = pro_quantity;
@@ -33,7 +35,10 @@ public class Product {
         this.pro_image = pro_image;
         this.pro_description = pro_description;
         this.pro_discount = pro_discount;
+        this.pro_date = pro_date;
         this.pro_category = pro_category;
+        this.pro_brand = pro_brand;
+        this.pro_origin = pro_origin;
     }
 
     public int getPro_id() {
@@ -92,12 +97,36 @@ public class Product {
         this.pro_discount = pro_discount;
     }
 
+    public Date getPro_date() {
+        return pro_date;
+    }
+
+    public void setPro_date(Date pro_date) {
+        this.pro_date = pro_date;
+    }
+
     public String getPro_category() {
         return pro_category;
     }
 
     public void setPro_category(String pro_category) {
         this.pro_category = pro_category;
+    }
+
+    public String getPro_brand() {
+        return pro_brand;
+    }
+
+    public void setPro_brand(String pro_brand) {
+        this.pro_brand = pro_brand;
+    }
+
+    public String getPro_origin() {
+        return pro_origin;
+    }
+
+    public void setPro_origin(String pro_origin) {
+        this.pro_origin = pro_origin;
     }
 
 }

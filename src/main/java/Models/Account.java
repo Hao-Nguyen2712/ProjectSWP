@@ -11,7 +11,7 @@ package Models;
 public class Account {
 
     private int acc_id;
-    private String gmail;
+    private String email;
     private String password;
 
     public Account() {
@@ -19,7 +19,7 @@ public class Account {
 
     public Account(int acc_id, String gmail, String password) {
         this.acc_id = acc_id;
-        this.gmail = gmail;
+        this.email = gmail;
         this.password = password;
     }
 
@@ -31,12 +31,12 @@ public class Account {
         this.acc_id = acc_id;
     }
 
-    public String getGmail() {
-        return gmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setGmail(String gmail) {
-        this.gmail = gmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

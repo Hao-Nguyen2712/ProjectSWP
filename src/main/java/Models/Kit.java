@@ -6,37 +6,36 @@ package Models;
 
 /**
  *
- * @author HIEU
+ * @author nguye
  */
 public class Kit {
-
-    private int kit_id;
+    private int kitID;
     private String layout;
-    private String curcuit;
+    private String circuit;
     private String plate;
     private String mode;
-    private String Case;
-    private Product pro_id;
+    private String kitCase;
+    private int pro_id;
 
     public Kit() {
     }
 
-    public Kit(int kit_id, String layout, String curcuit, String plate, String mode, String Case, Product pro_id) {
-        this.kit_id = kit_id;
+    public Kit(int kitID, String layout, String circuit, String plate, String mode, String kitCase, int pro_id) {
+        this.kitID = kitID;
         this.layout = layout;
-        this.curcuit = curcuit;
+        this.circuit = circuit;
         this.plate = plate;
         this.mode = mode;
-        this.Case = Case;
+        this.kitCase = kitCase;
         this.pro_id = pro_id;
     }
 
-    public int getKit_id() {
-        return kit_id;
+    public int getKitID() {
+        return kitID;
     }
 
-    public void setKit_id(int kit_id) {
-        this.kit_id = kit_id;
+    public void setKitID(int kitID) {
+        this.kitID = kitID;
     }
 
     public String getLayout() {
@@ -47,12 +46,12 @@ public class Kit {
         this.layout = layout;
     }
 
-    public String getCurcuit() {
-        return curcuit;
+    public String getCircuit() {
+        return circuit;
     }
 
-    public void setCurcuit(String mach) {
-        this.curcuit = mach;
+    public void setCircuit(String circuit) {
+        this.circuit = circuit;
     }
 
     public String getPlate() {
@@ -71,20 +70,21 @@ public class Kit {
         this.mode = mode;
     }
 
-    public String getCase() {
-        return Case;
+    public String getKitCase() {
+        return kitCase;
     }
 
-    public void setCase(String Case) {
-        this.Case = Case;
+    public void setKitCase(String kitCase) {
+        this.kitCase = kitCase;
     }
 
-    public Product getPro_id() {
+    public int getPro_id() {
         return pro_id;
     }
 
-    public void setPro_id(Product pro_id) {
+    public void setPro_id(int pro_id) {
         this.pro_id = pro_id;
     }
-
+    
+    
 }

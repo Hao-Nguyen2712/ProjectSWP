@@ -6,25 +6,24 @@ package Models;
 
 /**
  *
- * @author HIEU
+ * @author nguye
  */
 public class Keycap {
-
     private int kc_id;
     private String kc_material;
     private String kc_layout;
-    private String kc_thickness;
+    private String kc_thicknessl;
     private String kc_reliability;
-    private Product pro_id;
+    private int pro_id;
 
     public Keycap() {
     }
 
-    public Keycap(int kc_id, String kc_material, String kc_layout, String kc_thickness, String kc_reliability, Product pro_id) {
+    public Keycap(int kc_id, String kc_material, String kc_layout, String kc_thicknessl, String kc_reliability, int pro_id) {
         this.kc_id = kc_id;
         this.kc_material = kc_material;
         this.kc_layout = kc_layout;
-        this.kc_thickness = kc_thickness;
+        this.kc_thicknessl = kc_thicknessl;
         this.kc_reliability = kc_reliability;
         this.pro_id = pro_id;
     }
@@ -53,12 +52,12 @@ public class Keycap {
         this.kc_layout = kc_layout;
     }
 
-    public String getKc_thickness() {
-        return kc_thickness;
+    public String getKc_thicknessl() {
+        return kc_thicknessl;
     }
 
-    public void setKc_thickness(String kc_thickness) {
-        this.kc_thickness = kc_thickness;
+    public void setKc_thicknessl(String kc_thicknessl) {
+        this.kc_thicknessl = kc_thicknessl;
     }
 
     public String getKc_reliability() {
@@ -69,12 +68,13 @@ public class Keycap {
         this.kc_reliability = kc_reliability;
     }
 
-    public Product getPro_id() {
+    public int getPro_id() {
         return pro_id;
     }
 
-    public void setPro_id(Product pro_id) {
+    public void setPro_id(int pro_id) {
         this.pro_id = pro_id;
     }
-
+    
+    
 }

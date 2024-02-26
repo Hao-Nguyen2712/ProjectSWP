@@ -41,7 +41,7 @@ public class AccountDAO {
 
             while (rs.next()) {
                 acc = new Account();
-                acc.setGmail(rs.getString("acc_gmail"));
+                acc.setEmail(rs.getString("acc_gmail"));
                 acc.setPassword(rs.getString("acc_password"));
             }
 
@@ -86,7 +86,7 @@ public class AccountDAO {
         int count = 0;
         try {
             PreparedStatement ps = conn.prepareStatement("Insert into Account values (?,?)");
-            ps.setString(1, acc.getGmail());
+            ps.setString(1, acc.getEmail());
             ps.setString(2, acc.getPassword());
             count  = ps.executeUpdate();
             
@@ -97,5 +97,22 @@ public class AccountDAO {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    public boolean check(String use) {
+        boolean b = false;
+        ResultSet rs = null;
+        try {
+            Statement st = conn.createStatement();
+            rs = st.executeQuery("select * from account");
+            while (rs.next()) {
+                if (use.equals(rs.getString("acc_email"))) {
+                    b = true;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return b;
     }
 }

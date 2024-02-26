@@ -6,31 +6,30 @@ package Models;
 
 /**
  *
- * @author Laptop
+ * @author nguye
  */
 public class Mouse {
-
     private int mouse_id;
     private String mouse_dpi;
-    private String mouse_wire_length;
+    private String mouse_wireLength;
     private String mouse_led;
-    private String mouse_type_battery;
+    private String mouse_typeBattery;
     private String mouse_weight;
     private String mouse_compatibility;
-    private Product pro_id;
+    private int pro_id;
 
     public Mouse() {
     }
 
-    public Mouse(int mouse_id, String mouse_dpi, String mouse_wire_length, String mouse_led, String mouse_type_battery, String mouse_weight, String mouse_compatibility, Product pro) {
+    public Mouse(int mouse_id, String mouse_dpi, String mouse_wireLength, String mouse_led, String mouse_typeBattery, String mouse_weight,  String mouse_compatibility, int pro_id) {
         this.mouse_id = mouse_id;
         this.mouse_dpi = mouse_dpi;
-        this.mouse_wire_length = mouse_wire_length;
+        this.mouse_wireLength = mouse_wireLength;
         this.mouse_led = mouse_led;
-        this.mouse_type_battery = mouse_type_battery;
+        this.mouse_typeBattery = mouse_typeBattery;
         this.mouse_weight = mouse_weight;
         this.mouse_compatibility = mouse_compatibility;
-        this.pro_id = pro;
+        this.pro_id = pro_id;
     }
 
     public int getMouse_id() {
@@ -49,12 +48,12 @@ public class Mouse {
         this.mouse_dpi = mouse_dpi;
     }
 
-    public String getMouse_wire_length() {
-        return mouse_wire_length;
+    public String getMouse_wireLength() {
+        return mouse_wireLength;
     }
 
-    public void setMouse_wire_length(String mouse_wire_length) {
-        this.mouse_wire_length = mouse_wire_length;
+    public void setMouse_wireLength(String mouse_wireLength) {
+        this.mouse_wireLength = mouse_wireLength;
     }
 
     public String getMouse_led() {
@@ -65,12 +64,12 @@ public class Mouse {
         this.mouse_led = mouse_led;
     }
 
-    public String getMouse_type_battery() {
-        return mouse_type_battery;
+    public String getMouse_typeBattery() {
+        return mouse_typeBattery;
     }
 
-    public void setMouse_type_battery(String mouse_type_battery) {
-        this.mouse_type_battery = mouse_type_battery;
+    public void setMouse_typeBattery(String mouse_typeBattery) {
+        this.mouse_typeBattery = mouse_typeBattery;
     }
 
     public String getMouse_weight() {
@@ -89,12 +88,13 @@ public class Mouse {
         this.mouse_compatibility = mouse_compatibility;
     }
 
-    public Product getPro_id() {
+    public int getPro_id() {
         return pro_id;
     }
 
-    public void setPro(Product pro) {
-        this.pro_id = pro;
+    public void setPro_id(int pro_id) {
+        this.pro_id = pro_id;
     }
+    
     
 }

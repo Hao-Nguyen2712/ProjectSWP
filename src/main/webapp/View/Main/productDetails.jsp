@@ -9,6 +9,7 @@
 <%@page import="DAOs.KeyboardDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Models.Keyboard"%>
+<%@page import="Models.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%><!DOCTYPE html>
 <html>
     <head>
@@ -32,10 +33,13 @@
     <body style="z-index: 1200">
         <ul class="notifications"></ul>
         <%@include file="../Header/Header.jsp" %>
-        <%            String type = (String) session.getAttribute("typeNow");
+        <%          
+            String type = (String) session.getAttribute("typeNow");
+            ProductDAO pDAO = new ProductDAO();
             if (type.equals("Keyboard")) {
 
                 Keyboard key = (Keyboard) session.getAttribute("getProduct");
+                Product pro = pDAO.getProductByID(key.getPro_id());
                 String[] image = (String[]) session.getAttribute("listImage");
                 KeyboardDAO keyDAO = new KeyboardDAO();
         %>
@@ -115,22 +119,22 @@
                                 <div class="ps-lg-3">
                                     <a class="title text-muted text-uppercase text-decoration-none" href="#!">Trang Chủ</a> / <a
                                         class="title text-muted text-uppercase text-decoration-none" href="#!"><%=type%></a>
-                                    <h4 class="titleProduct"> <%= key.getPro_id().getPro_name()%> </h4>
+                                    <h4 class="titleProduct"> <%= pro.getPro_name()%> </h4>
                                     <div class="d-flex">
                                         <div class="vr my-3" style="width: 50px; height: 2px; background-color: #e5e5e5;"></div>
                                     </div>
                                     <div class="mb-3">
                                         <%
-                                            if (key.getPro_id().getPro_discount() != "0") {
+                                            if (pro.getPro_discount() != "0") {
                                         %>
                                         <span class="h5 text-decoration-line-through text-muted fs-4 text">
-                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(keyDAO.getPriceBeforeDiscount(Integer.parseInt(key.getPro_id().getPro_discount()), Integer.parseInt(key.getPro_id().getPro_price())))%> </p>
+                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(keyDAO.getPriceBeforeDiscount(Integer.parseInt(pro.getPro_discount()), Integer.parseInt(pro.getPro_price())))%> </p>
                                         </span>
                                         <%
                                             }
                                         %>
                                         <span class="h5 ms-2  fs-4 text">
-                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(Integer.parseInt(key.getPro_id().getPro_price()))%></p>
+                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(Integer.parseInt(pro.getPro_price()))%></p>
                                         </span>
                                     </div>
 
@@ -191,33 +195,33 @@
                                     <div class="tab-content" id="ex1-content">
                                         <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel" aria-labelledby="ex1-tab-1">
                                             <p>
-                                                <%= key.getPro_id().getPro_description()%>
+                                                <%= pro.getPro_description()%>
                                             </p>
 
                                             <table class="table border mt-3 mb-2">
                                                 <tr>
                                                     <th class="py-2">Led:</th>
-                                                    <td class="py-2"><%= key.getLed()%></td>
+                                                    <td class="py-2"><%= key.getKb_led()%></td>
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Mode:</th>
-                                                    <td class="py-2"><%= key.getMode()%> Mode</td>
+                                                    <td class="py-2"><%= key.getKb_mode()%> Mode</td>
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Switch:</th>
-                                                    <td class="py-2"><%= key.getSwitch()%></td>
+                                                    <td class="py-2"><%= key.getKb_switch()%></td>
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Keycap:</th>
-                                                    <td class="py-2"><%= key.getKeycap()%></td>
+                                                    <td class="py-2"><%= key.getKb_keycap()%></td>
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Plate:</th>
-                                                    <td class="py-2"><%= key.getPlate()%></td>
+                                                    <td class="py-2"><%= key.getKb_plate()%></td>
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Case:</th>
-                                                    <td class="py-2"><%= key.getCase()%></td>
+                                                    <td class="py-2"><%= key.getKb_case()%></td>
                                                 </tr>
 
                                             </table>
@@ -232,8 +236,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Sản Phẩm Tương Tự</h5>
                                             <%
-                                                ProductDAO pDAO = new ProductDAO();
-                                                ResultSet rs = pDAO.getSimilarProduct(type, key.getPro_id().getPro_id());
+                                                ResultSet rs = pDAO.getSimilarProduct(type, pro.getPro_id());
                                                 int dem = 0;
                                                 while (rs.next()) {
                                                     if (dem == 2) {
@@ -276,8 +279,8 @@
         %>
         <%
             if (type.equals("Kit-ban-phim")) {
-
                 Kit kit = (Kit) session.getAttribute("getProduct");
+                Product pro = pDAO.getProductByID(kit.getPro_id());
                 String[] image = (String[]) session.getAttribute("listImage");
                 KeyboardDAO keyDAO = new KeyboardDAO();
         %>
@@ -357,22 +360,22 @@
                                 <div class="ps-lg-3">
                                     <a class="title text-muted text-uppercase text-decoration-none" href="#!">Trang Chủ</a> / <a
                                         class="title text-muted text-uppercase text-decoration-none" href="#!"><%=type%></a>
-                                    <h4 class="titleProduct"> <%= kit.getPro_id().getPro_name()%> </h4>
+                                    <h4 class="titleProduct"> <%=pro.getPro_name()%> </h4>
                                     <div class="d-flex">
                                         <div class="vr my-3" style="width: 50px; height: 2px; background-color: #e5e5e5;"></div>
                                     </div>
                                     <div class="mb-3">
                                         <%
-                                            if (kit.getPro_id().getPro_discount() != "0") {
+                                            if (pro.getPro_discount() != "0") {
                                         %>
                                         <span class="h5 text-decoration-line-through text-muted fs-4 text">
-                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(keyDAO.getPriceBeforeDiscount(Integer.parseInt(kit.getPro_id().getPro_discount()), Integer.parseInt(kit.getPro_id().getPro_price())))%> </p>
+                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(keyDAO.getPriceBeforeDiscount(Integer.parseInt(pro.getPro_discount()), Integer.parseInt(pro.getPro_price())))%> </p>
                                         </span>
                                         <%
                                             }
                                         %>
                                         <span class="h5 ms-2  fs-4 text">
-                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(Integer.parseInt(kit.getPro_id().getPro_price()))%></p>
+                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(Integer.parseInt(pro.getPro_price()))%></p>
                                         </span>
                                     </div>
 
@@ -433,7 +436,7 @@
                                     <div class="tab-content" id="ex1-content">
                                         <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel" aria-labelledby="ex1-tab-1">
                                             <p>
-                                                <%= kit.getPro_id().getPro_description()%>
+                                                <%= pro.getPro_description()%>
                                             </p>
 
                                             <table class="table border mt-3 mb-2">
@@ -443,7 +446,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Mạch:</th>
-                                                    <td class="py-2"><%= kit.getCurcuit()%></td>
+                                                    <td class="py-2"><%= kit.getCircuit()%></td>
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Plate:</th>
@@ -455,7 +458,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Case:</th>
-                                                    <td class="py-2"><%= kit.getCase()%></td>
+                                                    <td class="py-2"><%= kit.getKitCase()%></td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -469,8 +472,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Sản Phẩm Tương Tự</h5>
                                             <%
-                                                ProductDAO pDAO = new ProductDAO();
-                                                ResultSet rs = pDAO.getSimilarProduct("Kit", kit.getPro_id().getPro_id());
+                                                ResultSet rs = pDAO.getSimilarProduct("Kit", pro.getPro_id());
                                                 int dem = 0;
                                                 while (rs.next()) {
                                                     if (dem == 2) {
@@ -516,6 +518,7 @@
                     "Key-cap")) {
 
                 Keycap key = (Keycap) session.getAttribute("getProduct");
+                Product pro = pDAO.getProductByID(key.getPro_id());
                 String[] image = (String[]) session.getAttribute("listImage");
                 KeyboardDAO keyDAO = new KeyboardDAO();
         %>
@@ -595,22 +598,22 @@
                                 <div class="ps-lg-3">
                                     <a class="title text-muted text-uppercase text-decoration-none" href="#!">Trang Chủ</a> / <a
                                         class="title text-muted text-uppercase text-decoration-none" href="#!"><%=type%></a>
-                                    <h4 class="titleProduct"> <%= key.getPro_id().getPro_name()%> </h4>
+                                    <h4 class="titleProduct"> <%= pro.getPro_name()%> </h4>
                                     <div class="d-flex">
                                         <div class="vr my-3" style="width: 50px; height: 2px; background-color: #e5e5e5;"></div>
                                     </div>
                                     <div class="mb-3">
                                         <%
-                                            if (key.getPro_id().getPro_discount() != "0") {
+                                            if (pro.getPro_discount() != "0") {
                                         %>
                                         <span class="h5 text-decoration-line-through text-muted fs-4 text">
-                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(keyDAO.getPriceBeforeDiscount(Integer.parseInt(key.getPro_id().getPro_discount()), Integer.parseInt(key.getPro_id().getPro_price())))%> </p>
+                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(keyDAO.getPriceBeforeDiscount(Integer.parseInt(pro.getPro_discount()), Integer.parseInt(pro.getPro_price())))%> </p>
                                         </span>
                                         <%
                                             }
                                         %>
                                         <span class="h5 ms-2  fs-4 text">
-                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(Integer.parseInt(key.getPro_id().getPro_price()))%></p>
+                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(Integer.parseInt(pro.getPro_price()))%></p>
                                         </span>
                                     </div>
 
@@ -670,7 +673,7 @@
                                     <div class="tab-content" id="ex1-content">
                                         <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel" aria-labelledby="ex1-tab-1">
                                             <p>
-                                                <%= key.getPro_id().getPro_description()%>
+                                                <%= pro.getPro_description()%>
                                             </p>
 
                                             <table class="table border mt-3 mb-2">
@@ -684,7 +687,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Độ dày:</th>
-                                                    <td class="py-2"><%= key.getKc_thickness()%></td>
+                                                    <td class="py-2"><%= key.getKc_thicknessl()%></td>
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Độ bền:</th>
@@ -702,8 +705,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Sản Phẩm Tương Tự</h5>
                                             <%
-                                                ProductDAO pDAO = new ProductDAO();
-                                                ResultSet rs = pDAO.getSimilarProduct("Keycap", key.getPro_id().getPro_id());
+                                                ResultSet rs = pDAO.getSimilarProduct("Keycap", pro.getPro_id());
                                                 int dem = 0;
                                                 while (rs.next()) {
                                                     if (dem == 2) {
@@ -749,6 +751,7 @@
                     "Switch")) {
 
                 Switch swi = (Switch) session.getAttribute("getProduct");
+                Product pro = pDAO.getProductByID(swi.getPro_id());
                 String[] image = (String[]) session.getAttribute("listImage");
                 KeyboardDAO keyDAO = new KeyboardDAO();
         %>
@@ -828,22 +831,22 @@
                                 <div class="ps-lg-3">
                                     <a class="title text-muted text-uppercase text-decoration-none" href="#!">Trang Chủ</a> / <a
                                         class="title text-muted text-uppercase text-decoration-none" href="#!"><%=type%></a>
-                                    <h4 class="titleProduct"> <%= swi.getPro_id().getPro_name()%> </h4>
+                                    <h4 class="titleProduct"> <%= pro.getPro_name()%> </h4>
                                     <div class="d-flex">
                                         <div class="vr my-3" style="width: 50px; height: 2px; background-color: #e5e5e5;"></div>
                                     </div>
                                     <div class="mb-3">
                                         <%
-                                            if (swi.getPro_id().getPro_discount() != "0") {
+                                            if (pro.getPro_discount() != "0") {
                                         %>
                                         <span class="h5 text-decoration-line-through text-muted fs-4 text">
-                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(keyDAO.getPriceBeforeDiscount(Integer.parseInt(swi.getPro_id().getPro_discount()), Integer.parseInt(swi.getPro_id().getPro_price())))%> </p>
+                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(keyDAO.getPriceBeforeDiscount(Integer.parseInt(pro.getPro_discount()), Integer.parseInt(pro.getPro_price())))%> </p>
                                         </span>
                                         <%
                                             }
                                         %>
                                         <span class="h5 ms-2  fs-4 text">
-                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(Integer.parseInt(swi.getPro_id().getPro_price()))%></p>
+                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(Integer.parseInt(pro.getPro_price()))%></p>
                                         </span>
                                     </div>
 
@@ -904,29 +907,29 @@
                                     <div class="tab-content" id="ex1-content">
                                         <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel" aria-labelledby="ex1-tab-1">
                                             <p>
-                                                <%= swi.getPro_id().getPro_description()%>
+                                                <%= pro.getPro_description()%>
                                             </p>
 
                                             <table class="table border mt-3 mb-2">
                                                 <tr>
                                                     <th class="py-2">Pin:</th>
-                                                    <td class="py-2"><%= swi.getSwitch_pin()%></td>
+                                                    <td class="py-2"><%= swi.getSw_pin()%></td>
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Type:</th>
-                                                    <td class="py-2"><%= swi.getSwitch_type()%></td>
+                                                    <td class="py-2"><%= swi.getSw_type()%></td>
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Lò xo:</th>
-                                                    <td class="py-2"><%= swi.getSwitch_spring()%> gam</td>
+                                                    <td class="py-2"><%= swi.getSw_spring()%> gam</td>
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Độ bền:</th>
-                                                    <td class="py-2"><%= swi.getSwitch_reliability()%> triệu lần nhấn</td>
+                                                    <td class="py-2"><%= swi.getSw_reliability()%> triệu lần nhấn</td>
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Hành Trình:</th>
-                                                    <td class="py-2"><%= swi.getSwitch_depth()%> mm</td>
+                                                    <td class="py-2"><%= swi.getSw_depth()%> mm</td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -940,8 +943,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Sản Phẩm Tương Tự</h5>
                                             <%
-                                                ProductDAO pDAO = new ProductDAO();
-                                                ResultSet rs = pDAO.getSimilarProduct(type, swi.getPro_id().getPro_id());
+                                                ResultSet rs = pDAO.getSimilarProduct(type, pro.getPro_id());
                                                 int dem = 0;
                                                 while (rs.next()) {
                                                     if (dem == 2) {
@@ -983,6 +985,7 @@
             if (type.equals(
                     "Earphone")) {
                 Earphone ear = (Earphone) session.getAttribute("getProduct");
+                Product pro = pDAO.getProductByID(ear.getPro_id());
                 String[] image = (String[]) session.getAttribute("listImage");
                 KeyboardDAO keyDAO = new KeyboardDAO();
         %>
@@ -1062,22 +1065,22 @@
                                 <div class="ps-lg-3">
                                     <a class="title text-muted text-uppercase text-decoration-none" href="#!">Trang Chủ</a> / <a
                                         class="title text-muted text-uppercase text-decoration-none" href="#!"><%=type%></a>
-                                    <h4 class="titleProduct"> <%= ear.getPro_id().getPro_name()%> </h4>
+                                    <h4 class="titleProduct"> <%= pro.getPro_name()%> </h4>
                                     <div class="d-flex">
                                         <div class="vr my-3" style="width: 50px; height: 2px; background-color: #e5e5e5;"></div>
                                     </div>
                                     <div class="mb-3">
                                         <%
-                                            if (ear.getPro_id().getPro_discount() != "0") {
+                                            if (pro.getPro_discount() != "0") {
                                         %>
                                         <span class="h5 text-decoration-line-through text-muted fs-4 text">
-                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(keyDAO.getPriceBeforeDiscount(Integer.parseInt(ear.getPro_id().getPro_discount()), Integer.parseInt(ear.getPro_id().getPro_price())))%> </p>
+                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(keyDAO.getPriceBeforeDiscount(Integer.parseInt(pro.getPro_discount()), Integer.parseInt(pro.getPro_price())))%> </p>
                                         </span>
                                         <%
                                             }
                                         %>
                                         <span class="h5 ms-2  fs-4 text">
-                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(Integer.parseInt(ear.getPro_id().getPro_price()))%></p>
+                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(Integer.parseInt(pro.getPro_price()))%></p>
                                         </span>
                                     </div>
 
@@ -1138,7 +1141,7 @@
                                     <div class="tab-content" id="ex1-content">
                                         <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel" aria-labelledby="ex1-tab-1">
                                             <p>
-                                                <%= ear.getPro_id().getPro_description()%>
+                                                <%= pro.getPro_description()%>
                                             </p>
 
                                             <table class="table border mt-3 mb-2">
@@ -1168,11 +1171,11 @@
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Cổng sạc:</th>
-                                                    <td class="py-2"><%= ear.getEar_charging_port()%></td>
+                                                    <td class="py-2"><%= ear.getEar_chargingPort()%></td>
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Công nghệ kết nối:</th>
-                                                    <td class="py-2"><%= ear.getEar_connect_tech()%></td>
+                                                    <td class="py-2"><%= ear.getEar_connectTeach()%></td>
                                                 </tr>
                                             </table>
                                         </div>
@@ -1186,8 +1189,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Sản Phẩm Tương Tự</h5>
                                             <%
-                                                ProductDAO pDAO = new ProductDAO();
-                                                ResultSet rs = pDAO.getSimilarProduct(type, ear.getPro_id().getPro_id());
+                                                ResultSet rs = pDAO.getSimilarProduct(type, pro.getPro_id());
                                                 int dem = 0;
                                                 while (rs.next()) {
                                                     if (dem == 2) {
@@ -1230,6 +1232,7 @@
                     "Mouse")) {
 
                 Mouse mouse = (Mouse) session.getAttribute("getProduct");
+                Product pro = pDAO.getProductByID(mouse.getPro_id());
                 String[] image = (String[]) session.getAttribute("listImage");
                 KeyboardDAO keyDAO = new KeyboardDAO();
         %>
@@ -1309,22 +1312,22 @@
                                 <div class="ps-lg-3">
                                     <a class="title text-muted text-uppercase text-decoration-none" href="#!">Trang Chủ</a> / <a
                                         class="title text-muted text-uppercase text-decoration-none" href="#!"><%=type%></a>
-                                    <h4 class="titleProduct"> <%= mouse.getPro_id().getPro_name()%> </h4>
+                                    <h4 class="titleProduct"> <%= pro.getPro_name()%> </h4>
                                     <div class="d-flex">
                                         <div class="vr my-3" style="width: 50px; height: 2px; background-color: #e5e5e5;"></div>
                                     </div>
                                     <div class="mb-3">
                                         <%
-                                            if (mouse.getPro_id().getPro_discount() != "0") {
+                                            if (pro.getPro_discount() != "0") {
                                         %>
                                         <span class="h5 text-decoration-line-through text-muted fs-4 text">
-                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(keyDAO.getPriceBeforeDiscount(Integer.parseInt(mouse.getPro_id().getPro_discount()), Integer.parseInt(mouse.getPro_id().getPro_price())))%> </p>
+                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(keyDAO.getPriceBeforeDiscount(Integer.parseInt(pro.getPro_discount()), Integer.parseInt(pro.getPro_price())))%> </p>
                                         </span>
                                         <%
                                             }
                                         %>
                                         <span class="h5 ms-2  fs-4 text">
-                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(Integer.parseInt(mouse.getPro_id().getPro_price()))%></p>
+                                            <p class="d-inline text">₫<%=  keyDAO.converterNumber(Integer.parseInt(pro.getPro_price()))%></p>
                                         </span>
                                     </div>
 
@@ -1385,7 +1388,7 @@
                                     <div class="tab-content" id="ex1-content">
                                         <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel" aria-labelledby="ex1-tab-1">
                                             <p>
-                                                <%= mouse.getPro_id().getPro_description()%>
+                                                <%=pro.getPro_description()%>
                                             </p>
 
                                             <table class="table border mt-3 mb-2">
@@ -1395,7 +1398,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Độ dài dây:</th>
-                                                    <td class="py-2"><%= mouse.getMouse_wire_length()%></td>
+                                                    <td class="py-2"><%= mouse.getMouse_wireLength()%></td>
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Led:</th>
@@ -1403,7 +1406,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Loại pin:</th>
-                                                    <td class="py-2"><%= mouse.getMouse_type_battery()%></td>
+                                                    <td class="py-2"><%= mouse.getMouse_typeBattery()%></td>
                                                 </tr>
                                                 <tr>
                                                     <th class="py-2">Khối lượng:</th>
@@ -1425,8 +1428,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Sản Phẩm Tương Tự</h5>
                                             <%
-                                                ProductDAO pDAO = new ProductDAO();
-                                                ResultSet rs = pDAO.getSimilarProduct(type, mouse.getPro_id().getPro_id());
+                                                ResultSet rs = pDAO.getSimilarProduct(type, pro.getPro_id());
                                                 int dem = 0;
                                                 while (rs.next()) {
                                                     if (dem == 2) {
