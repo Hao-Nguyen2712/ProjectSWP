@@ -13,6 +13,10 @@
         <servlet-class>Controllers.HomeController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>LiveSearchController</servlet-name>
+        <servlet-class>Controllers.LiveSearchController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CartController</servlet-name>
         <servlet-class>Controllers.CartController</servlet-class>
     </servlet>
@@ -42,7 +46,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CartController</servlet-name>
-        <url-pattern>/CartController</url-pattern>
+        <url-pattern>/CartController/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProductController</servlet-name>
@@ -54,15 +58,19 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
-        <url-pattern>/OrderController</url-pattern>
+        <url-pattern>/OrderController/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminController</servlet-name>
-        <url-pattern>/AdminController</url-pattern>
+        <url-pattern>/AdminController/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AccountController</servlet-name>
         <url-pattern>/AccountController/*</url-pattern>
+    </servlet-mapping>
+      <servlet-mapping>
+        <servlet-name>LiveSearchController</servlet-name>
+        <url-pattern>/LiveSearchController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

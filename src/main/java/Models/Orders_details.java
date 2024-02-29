@@ -12,14 +12,14 @@ public class Orders_details {
     private int id;
     private int order_id;
     private int pro_id;
-    private int price;
+    private String price;
     private int quantity;
-    private int totalMoney;
+    private String totalMoney;
 
     public Orders_details() {
     }
 
-    public Orders_details(int id, int order_id, int pro_id, int price, int quantity, int totalMoney) {
+    public Orders_details(int id, int order_id, int pro_id, String price, int quantity, String totalMoney) {
         this.id = id;
         this.order_id = order_id;
         this.pro_id = pro_id;
@@ -52,11 +52,11 @@ public class Orders_details {
         this.pro_id = pro_id;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -68,13 +68,14 @@ public class Orders_details {
         this.quantity = quantity;
     }
 
-    public int getTotalMoney() {
+    public String getTotalMoney() {
         return totalMoney;
     }
 
-    public void setTotalMoney(int totalMoney) {
+    public void setTotalMoney(String totalMoney) {
         this.totalMoney = totalMoney;
     }
-    
+
+   
     
 }

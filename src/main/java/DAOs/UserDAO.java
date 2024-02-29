@@ -70,4 +70,19 @@ public class UserDAO {
         return users;
     }
 
+    public int getUserIDWithAccID(int acc_id) {
+        int user_id = 0;
+        ResultSet rs = null;
+        try {
+            PreparedStatement ps = conn.prepareStatement("select user_id from [User] where acc_id=?");
+            ps.setInt(1, acc_id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                user_id = rs.getInt("user_id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user_id;
+    }
 }

@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 public class Order {
 
     private int order_id;
-    private String username;
+    private int user_id;
     private Date order_date;
     private String order_status;
     private String order_name;
@@ -27,9 +27,10 @@ public class Order {
     public Order() {
     }
 
-    public Order(int order_id, String username, String order_status, String order_name, int order_totalMoney, String order_phone, String order_email, String order_address) {
+    public Order(int order_id, int user_id, Date order_date, String order_status, String order_name, int order_totalMoney, String order_phone, String order_email, String order_address) {
         this.order_id = order_id;
-        this.username = username;
+        this.user_id = user_id;
+        this.order_date = order_date;
         this.order_status = order_status;
         this.order_name = order_name;
         this.order_totalMoney = order_totalMoney;
@@ -37,6 +38,8 @@ public class Order {
         this.order_email = order_email;
         this.order_address = order_address;
     }
+
+    
 
     public int getOrder_id() {
         return order_id;
@@ -46,12 +49,12 @@ public class Order {
         this.order_id = order_id;
     }
 
-    public String getUsername() {
-        return username;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public Date getOrder_date() {

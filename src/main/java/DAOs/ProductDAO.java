@@ -582,6 +582,9 @@ public class ProductDAO {
                 pro.setPro_description(rs.getString("pro_description"));
                 pro.setPro_discount(rs.getString("pro_discount"));
                 pro.setPro_category(rs.getString("pro_category"));
+                pro.setPro_date(rs.getDate("pro_date"));
+                pro.setPro_brand("pro_brand");
+                pro.setPro_origin("pro_origin");
                 list.add(pro);
             }
         } catch (SQLException ex) {

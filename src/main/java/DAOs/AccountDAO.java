@@ -149,4 +149,21 @@ public class AccountDAO {
         }
         return null;
     }
+    
+    public int getAccIDWithGmail(String acc_gmail) {
+        int acc_id = 0;
+        ResultSet rs = null;
+
+        try {
+            PreparedStatement ps = conn.prepareStatement("select acc_id from Account where acc_gmail=?");
+            ps.setString(1, acc_gmail);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                acc_id = rs.getInt("acc_id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return acc_id;
+    }
 }

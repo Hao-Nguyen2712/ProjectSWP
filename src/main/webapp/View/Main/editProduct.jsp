@@ -18,12 +18,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
         <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
         <title>Nghien Nhua</title>
-        <link rel="shortcut icon" href="/Front/assets/image/logo/z4705695345706_20ca59964f9ad379fcebb44ceaad6cd4-removebg-preview.png"/>
+        <link rel="shortcut icon" href="../../Root/Images/Logo/z4705695345706_20ca59964f9ad379fcebb44ceaad6cd4-removebg-preview.png"/>
         <style>
             .form-control.valid {
                 border-color: #28a745;
@@ -109,16 +108,9 @@
                         <div class="col-md-10">
                             <%
                                 String img = pro.getPro_image();
-                                int indexOfAmpersand = img.indexOf("&");
-                                String result;
-                                if (indexOfAmpersand != -1) {
-                                    // Lấy cắt chuỗi từ đầu đến dấu "&" đầu tiên
-                                    result = img.substring(0, indexOfAmpersand);
-                                } else {
-                                    result = pro.getPro_image();
-                                }
-
-                            %><img src="<%= result%>" alt="alt" class="img-thumbnail" width="100px">
+                                 String[] image = img.split("&");
+                            %>
+                            <img src="../../Root/Images/Product/<%= image[0]%>" alt="alt" class="img-thumbnail" width="100px">
 
                             <input class="form-control" type="hidden" id="formFile" value="<%= img%>" name="txtPicture2"  multiple="true">
                             <input class="form-control" type="file" id="formFile" value="img" name="txtPicture"  multiple="true">
@@ -392,7 +384,7 @@
             });
         } else if (category === "Kit") {
             fieldsDiv.innerHTML = `
-            <% if (pro.getPro_category().equals("Kit")) {
+    <% if (pro.getPro_category().equals("Kit")) {
             Kit kit = (Kit) session.getAttribute("kit");
     %>
 <div class="col-md-8 row my-2 d-flex justify-content-between">
@@ -441,7 +433,7 @@
 <div class="form-message"></div>
 </div>
 </div>
-                <%}%>
+    <%}%>
 `;
             const kit_layout = document.getElementById('kit_layout');
             const kit_circuit = document.getElementById('kit_circuit');
@@ -541,7 +533,7 @@
 
         } else if (category === "Keycap") {
             fieldsDiv.innerHTML = `
-            <% if (pro.getPro_category().equals("Keycap")) {
+    <% if (pro.getPro_category().equals("Keycap")) {
             Keycap keycap = (Keycap) session.getAttribute("keycap");
     %>
 <div class="col-md-8 row my-2 d-flex justify-content-between">
@@ -580,7 +572,7 @@
 <div class="form-message"></div>
 </div>
 </div>
-<%}%>         
+    <%}%>         
 `;
             const keycap_material = document.getElementById('keycap_material');
             const keycap_layout = document.getElementById('keycap_layout');
@@ -669,7 +661,7 @@
 
         } else if (category === "Switch") {
             fieldsDiv.innerHTML = `
-            <% if (pro.getPro_category().equals("Switch")) {
+    <% if (pro.getPro_category().equals("Switch")) {
             Switch switchs = (Switch) session.getAttribute("switch");
     %>
 <div class="col-md-8 row my-2 d-flex justify-content-between">
@@ -718,7 +710,7 @@
 <div class="form-message"></div>
 </div>
 </div>
-<%}%>                
+    <%}%>                
 `;
             const switch_pin = document.getElementById('switch_pin');
             const switch_type = document.getElementById('switch_type');
@@ -821,7 +813,7 @@
 
         } else if (category === "Earphone") {
             fieldsDiv.innerHTML = `
-            <% if (pro.getPro_category().equals("Earphone")) {
+    <% if (pro.getPro_category().equals("Earphone")) {
             Earphone earphone = (Earphone) session.getAttribute("earphone");
     %>
 <div class="col-md-8 row my-2 d-flex justify-content-between">
@@ -913,7 +905,7 @@
 <div class="form-message"></div>
 </div>
 </div>
-<%}%>                
+    <%}%>                
 `;
             const earphone_type = document.getElementById('earphone_type');
             const earphone_plug = document.getElementById('earphone_plug');
@@ -1067,7 +1059,7 @@
             });
         } else if (category === "Mouse") {
             fieldsDiv.innerHTML = `
-            <% if (pro.getPro_category().equals("Mouse")) {
+    <% if (pro.getPro_category().equals("Mouse")) {
             Mouse mouse = (Mouse) session.getAttribute("mouse");
     %>
 <div class="col-md-8 row my-2 d-flex justify-content-between">
@@ -1129,7 +1121,7 @@
 <div class="form-message text-start"></div>
 </div>
 </div>
-<%}%>                
+    <%}%>                
 `;
             const mouse_dpi = document.getElementById('mouse_dpi');
             const mouse_wirelength = document.getElementById('mouse_wirelength');

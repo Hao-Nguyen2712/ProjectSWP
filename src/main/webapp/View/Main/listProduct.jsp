@@ -190,13 +190,14 @@
                                         else{
                                         result = description;
                                         }
+                                        String[] image = rs.getString("pro_image").split("&");
                                     %>
                                     <tr>
                                         <td><%= rs.getInt("pro_id")%></td>
                                         <td><%= rs.getString("pro_name")%></td>
                                         <td><%= rs.getInt("pro_quantity")%></td>
                                         <td><%= rs.getString("pro_price")%></td>                                 
-                                        <td><img src="<%= rs.getString("pro_image")%>" alt="Laptop" style="width: 60px"/></td>
+                                        <td><img src="../../Root/Images/Product/<%= image[0]%>" alt="Laptop" style="width: 60px"/></td>
                                         <td><%= result%></td>
                                         <td><%= rs.getString("pro_discount")%></td>
                                         <td><%= rs.getString("pro_date")%></td>

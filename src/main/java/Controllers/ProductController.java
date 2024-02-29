@@ -4,7 +4,11 @@
  */
 package Controllers;
 
+import DAOs.AccountDAO;
+import DAOs.CartDAO;
 import DAOs.ProductDAO;
+import DAOs.UserDAO;
+import Models.Account;
 import Models.Earphone;
 import Models.Keyboard;
 import Models.Keycap;
@@ -15,6 +19,7 @@ import Models.Switch;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -280,7 +285,58 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        AccountDAO accDAO = new AccountDAO();
+        ProductDAO proDAO = new ProductDAO();
+        UserDAO userDAO = new UserDAO();
+        CartDAO cDAO = new CartDAO();
+        String path = request.getRequestURI();
+        HttpSession session = (HttpSession) request.getSession();
+        String[] s = path.split("/");
+        int id = (int) session.getAttribute("id_product");
+        String type = s[2];
+        String username = "";
+        Cookie[] cList = request.getCookies();
+        for (int i = 0; i < cList.length; i++) {
+            if (cList[i].getName().equals("login")) {
+                username = cList[i].getValue();
+                break;
+            }
+        }
+        if (username.equals("")) {
+            session.setAttribute("status", "login");
+            response.sendRedirect("/ProductController/" + type + "/" + id);
+        } else {
+            if (request.getParameter("btnAddCart") != null) {
+                int quantity = Integer.parseInt(request.getParameter("txtQuantity"));
+                int pro_quantity = proDAO.getProductQuantity(id);
+                Account acc = (Account) session.getAttribute("account");
+                int acc_id = accDAO.getAccIDWithGmail(acc.getEmail());
+                int user_id = userDAO.getUserIDWithAccID(acc_id);
+                
+                if (quantity > pro_quantity) {
+                    session.setAttribute("status", "ErrorAddtoCart");
+                    response.sendRedirect("/ProductController/" + type + "/" + id);
+                } else {
+                    if (!cDAO.checkContainCart(id, user_id)) {
+                        if (cDAO.updateQuantityProductInCart(quantity, id, user_id) != 0) {
+                            session.setAttribute("status", "success");
+                        } else {
+                            session.setAttribute("status", "success");
+                        }
+                        response.sendRedirect("/ProductController/" + type + "/" + id);
+                    } else {
+                        boolean b = cDAO.addCard(id, quantity, user_id);
+                        if (b) {
+                            session.setAttribute("status", "success");
+                        } else {
+                            session.setAttribute("status", "error");
+                        }
+                        response.sendRedirect("/ProductController/" + type + "/" + id);
+                    }
+
+                }
+            }
+        }
     }
 
     /**

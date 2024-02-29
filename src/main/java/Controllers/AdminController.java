@@ -254,7 +254,7 @@ public class AdminController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (request.getParameter("btnAddNew") != null) {
-            String uploadPath = "C:\\Users\\thinh\\Downloads";
+            String uploadPath = "D:\\Ky 5 Chuyen Nganh\\ProjectNghienNhua\\src\\main\\webapp\\Root\\Images\\Product";
             // upload hinh vao thu muc
             Collection<Part> parts = request.getParts();
             String pic = "";
@@ -262,7 +262,7 @@ public class AdminController extends HttpServlet {
                 String fileName = part.getSubmittedFileName();
                 if (fileName != null && !fileName.isEmpty()) {
                     part.write(uploadPath + File.separator + fileName);
-                    pic += "/Front/assets/image/keyboardPic/" + fileName + "&";
+                    pic +=  fileName + "&";
 
                 } else {
                     fileName = "";
@@ -384,7 +384,7 @@ public class AdminController extends HttpServlet {
         }
 
         if (request.getParameter("btnUpdate") != null) {
-            String uploadPath = "D:\\Thinh\\ProjectSWP\\src\\main\\webapp\\Root\\Images\\Product";
+            String uploadPath = "D:\\Ky 5 Chuyen Nganh\\ProjectNghienNhua\\src\\main\\webapp\\Root\\Images\\Product";
             // upload hinh vao thu muc
             Collection<Part> parts = request.getParts();
             String pic = "";

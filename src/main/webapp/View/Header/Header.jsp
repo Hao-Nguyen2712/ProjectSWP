@@ -73,9 +73,9 @@
                                         </li>
 
                                         <%
-                                            Account account = (Account) session.getAttribute("account");
+                                            Account acc = (Account) session.getAttribute("account");
 
-                                            if (account != null) {
+                                            if (acc != null) {
                                         %>
                                         <li class="nav-item support">
                                             <a class="nav-link" href="/HomeController/User">HỒ SƠ</a>
@@ -95,7 +95,7 @@
                             <div class="boxShop">
                                 <ul class="navbar-nav mb-2 mb-lg-0">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="/OrderController/Cart"><i class="fa-solid fa-cart-shopping shop_icon"></i></a>
+                                        <a class="nav-link" href="/CartController/Cart"><i class="fa-solid fa-cart-shopping shop_icon"></i></a>
                                     </li>
                                 </ul>
                             </div>
