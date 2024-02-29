@@ -1,6 +1,6 @@
 <%-- 
-    Document   : confirm
-    Created on : Feb 20, 2024, 10:50:37 AM
+    Document   : resetPassword.jsp
+    Created on : Feb 28, 2024, 1:40:40 PM
     Author     : nguye
 --%>
 
@@ -9,22 +9,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Nghiện Nhựa</title>
+        <title>Nghiện Nhựa </title>
+        <link rel="shortcut icon" href="/Front/assets/image/logo/z4705695345706_20ca59964f9ad379fcebb44ceaad6cd4-removebg-preview.png"/>
         <link
             href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
             rel="stylesheet"
             />
-        <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-            />  
-        <link rel="shortcut icon" href="/Front/assets/image/logo/z4705695345706_20ca59964f9ad379fcebb44ceaad6cd4-removebg-preview.png"/>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <link rel="stylesheet" href="../../Root/Css/logninCss.css"/>
+        <link rel="stylesheet" href="../../Root/Css/notificationCss.css"/>
     </head>
     <body>
+        <ul class="notifications"></ul>
         <section class="ftco-section">
             <div class="container">
                 <div class="row justify-content-center">
@@ -37,33 +32,29 @@
                                 "
                                 ></div>
                             <h3 class="text-center mb-0">Welcome</h3>
-                            <p class="text-center">
-                                Confirm code sent to your email address to continue
-                            </p>
-                            <%
-                                 HttpSession sess = request.getSession();
-                                 String action =(String) sess.getAttribute("action");
-                            %>
-                            <form action="/<%= action %>" method="post" class="login-form">
+                            <p class="text-center">Enter your email to reset your password</p>
+                            <form action="/AccountController" method="post" class="login-form needs-validation" novalidate>
                                 <div class="form-group">
                                     <div
                                         class="icon d-flex align-items-center justify-content-center"
                                         >
-                                        <span class="fa fa-user"></span>
+                                        <span class="fa-regular fa-envelope"></span>
                                     </div>
                                     <input
-                                        name ="code"
-                                        type="text"
+                                        name="email"
+                                        type="email"
                                         class="form-control"
-                                        placeholder="Code"
+                                        placeholder="Email"
                                         required
                                         />
+                                    <div class="invalid-feedback">
+                                        Please provide a valid Gmail.
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
                                     <button
-                                        name="btnConfirm"
-                                        value="submitConfirm"
+                                        name="btnEmail"
                                         type="submit"
                                         class="btn form-control btn-primary rounded submit px-3"
                                         >
@@ -82,5 +73,43 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
+        <script src="../../Root/Js/notification.js"></script>
+        <%
+     HttpSession sess = request.getSession();
+     String mesg = (String) sess.getAttribute("status");
+        %>
+        <script>
+            createToast("<%= mesg%>")
+        </script>
+        <%
+            sess.setAttribute("status", "");
+        %>
+        <script
+            src="https://kit.fontawesome.com/2610154aa0.js"
+            crossorigin="anonymous"
+        ></script>
+
+        <script>
+            (function () {
+                "use strict";
+
+                var forms = document.querySelectorAll(".needs-validation");
+
+                Array.prototype.slice.call(forms).forEach(function (form) {
+                    form.addEventListener(
+                            "submit",
+                            function (event) {
+                                if (!form.checkValidity()) {
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                }
+
+                                form.classList.add("was-validated");
+                            },
+                            false
+                            );
+                });
+            })();
+        </script>
     </body>
 </html>

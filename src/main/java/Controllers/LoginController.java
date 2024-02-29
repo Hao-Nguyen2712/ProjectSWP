@@ -103,12 +103,15 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String part = request.getRequestURI();
+        HttpSession session = request.getSession();
         if (part.endsWith("login")) {
             request.getRequestDispatcher("/View/Main/login.jsp").forward(request, response);
         } else if (part.endsWith("Signup")) {
             request.getRequestDispatcher("/View/Main/signup.jsp").forward(request, response);
         } else if (part.endsWith("Confirm")) {
             request.getRequestDispatcher("/View/Main/confirm.jsp").forward(request, response);
+        } else if (part.endsWith("Restpassword")) {
+            request.getRequestDispatcher("/View/Main/resetPassword.jsp").forward(request, response);
         } else {
             processRequest(request, response);
         }
@@ -131,7 +134,7 @@ public class LoginController extends HttpServlet {
 
         if (request.getParameter("btnLogin") != null) {
             String gmail = request.getParameter("gmail");
-            String password = request.getParameter("password");
+            String password = request.getAttribute("password").toString();
             Account acc = aDAO.checkLogin(gmail, password);
             if (acc != null) {
                 Cookie cookie = new Cookie("login", gmail);
@@ -172,6 +175,7 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("user", user);
                 session.setAttribute("code", ranNumber);
                 session.setAttribute("status", "success");
+                session.setAttribute("action", "btnConfirm");
                 request.getRequestDispatcher("/View/Main/confirm.jsp").forward(request, response);
 
             }
@@ -206,6 +210,28 @@ public class LoginController extends HttpServlet {
             } else {
                 session.setAttribute("status", "error");
                 response.sendRedirect("/LoginController/Confirm");
+            }
+        }
+
+        if (request.getParameter("btnReset") != null) {
+            String email = request.getParameter("email");
+            UserDAO uDAO = new UserDAO();
+            Account account = aDAO.getAccount(email);
+            if (account != null) {
+                User user = uDAO.getUser(email);
+                Random random = new Random();
+                int ranNumber = random.nextInt(999999 - 100000 + 1) + 100000;
+                SendEmail mail = new SendEmail();
+                String formEmail = mail.formVerifyEmail(ranNumber, user.getUser_fullName());
+                SendEmail.sendEmail(email, "Verify email", formEmail);
+                session.setAttribute("account", account);
+                session.setAttribute("user", user);
+                session.setAttribute("code", ranNumber);
+                session.setAttribute("action", "btnConfirmReset");
+                request.getRequestDispatcher("/View/Main/confirm.jsp").forward(request, response);
+            } else {
+                session.setAttribute("status", "ErrorSignIn");
+                response.sendRedirect("AccountController/Restpassword");
             }
         }
 

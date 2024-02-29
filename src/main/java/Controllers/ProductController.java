@@ -131,7 +131,7 @@ public class ProductController extends HttpServlet {
                 try {
                     int id = Integer.parseInt(s[s.length - 1]);
                     ProductDAO pDAO = new ProductDAO();
-                    Keyboard key = pDAO.getKeyboardDetails(1);
+                    Keyboard key = pDAO.getKeyboardDetails(id);
 
                     if (key == null) {
                         response.sendRedirect("/ProductController/Keyboard");

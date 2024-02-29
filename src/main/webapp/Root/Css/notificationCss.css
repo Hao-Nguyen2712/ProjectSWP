@@ -29,6 +29,7 @@
     padding: 16px 17px;
     margin-bottom: 10px;
     background: var(--light);
+    display: flex;
     justify-content: space-between;
     animation: show_toast 0.3s ease forwards;
     z-index: 22001;

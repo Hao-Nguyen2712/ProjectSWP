@@ -6,11 +6,11 @@ const toastDetails = {
     timer: 5000,
     success: {
         icon: 'fa-circle-check',
-        text: 'Success: Successful action.',
+        text: 'Success: Thành công.',
     },
     error: {
         icon: 'fa-circle-xmark',
-        text: 'Error: Action fails.',
+        text: 'Error: Không thành công.',
     },
     warning: {
         icon: 'fa-triangle-exclamation',
@@ -22,7 +22,7 @@ const toastDetails = {
     },
     login: {
         icon: 'fa-circle-xmark',
-        text: 'Error: Please login first.',
+        text: 'Error: Vui lòng đăng nhập.',
     },
     ErrorLogin: {
         icon: 'fa-circle-xmark',
@@ -30,7 +30,7 @@ const toastDetails = {
     },
     ErrorAddtoCart: {
         icon: 'fa-circle-xmark',
-        text: 'Error: Cannot add product to cart.',
+        text: 'Error: Không thể thêm sản phẩm vào giỏ hàng.',
     },
     ErrorSignIn: {
         icon: 'fa-circle-xmark',

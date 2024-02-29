@@ -81,16 +81,16 @@ public class AccountDAO {
         }
         return proID;
     }
-    
+
     public Account addAccount(Account acc) {
         int count = 0;
         try {
             PreparedStatement ps = conn.prepareStatement("Insert into Account values (?,?)");
             ps.setString(1, acc.getEmail());
             ps.setString(2, acc.getPassword());
-            count  = ps.executeUpdate();
-            
-            if(count > 0) {
+            count = ps.executeUpdate();
+
+            if (count > 0) {
                 return acc;
             }
         } catch (SQLException ex) {
@@ -98,7 +98,7 @@ public class AccountDAO {
         }
         return null;
     }
-    
+
     public boolean check(String use) {
         boolean b = false;
         ResultSet rs = null;
@@ -114,5 +114,39 @@ public class AccountDAO {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return b;
+    }
+
+    public Account getAccount(String gmail) {
+        ResultSet rs = null;
+        Account account = null;
+
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from Account where acc_gmail = ?");
+            ps.setString(1, gmail);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                account = new Account(0, rs.getString("acc_gmail"), rs.getString("acc_password"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return account;
+    }
+
+    public Account updateAccount(Account acc, String password) {
+        int count = 0;
+        try {
+
+            PreparedStatement ps = conn.prepareStatement("UPDATE Account set acc_password = ? where acc_gmail = ?");
+            ps.setString(1, password);
+            ps.setString(2, acc.getEmail());
+            count = ps.executeUpdate();
+            if (count != 0) {
+                return acc;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }
