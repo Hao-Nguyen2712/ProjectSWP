@@ -76,7 +76,10 @@ public class AdminController extends HttpServlet {
             request.getRequestDispatcher("/View/Main/listProduct.jsp").forward(request, response);
         } else if (path.startsWith("/AdminController/ListProduct/Create")) {
             request.getRequestDispatcher("/View/Main/addProduct.jsp").forward(request, response);
-        } else if (path.startsWith("/AdminController/ListProduct/Delete")) {
+        }else if (path.startsWith("/AdminController/Thanks")) {
+            request.getRequestDispatcher("/View/Main/thanks.jsp").forward(request, response);
+        }  
+        else if (path.startsWith("/AdminController/ListProduct/Delete")) {
             String[] s = path.split("/");
             try {
                 int id = Integer.parseInt(s[s.length - 1]);
@@ -301,7 +304,7 @@ public class AdminController extends HttpServlet {
         }
 
         if (request.getParameter("btnUpdate") != null) {
-            String uploadPath = "C:\\Users\\thinh\\Downloads";
+            String uploadPath = "D:\\Thinh\\ProjectSWP\\src\\main\\webapp\\Root\\Images\\Product";
             // upload hinh vao thu muc
             Collection<Part> parts = request.getParts();
             String pic = "";
@@ -309,10 +312,13 @@ public class AdminController extends HttpServlet {
                 String fileName = part.getSubmittedFileName();
                 if (fileName != null && !fileName.isEmpty()) {
                     part.write(uploadPath + File.separator + fileName);
-                    pic += "/Front/assets/image/keyboardPic/" + fileName + "&";
+                    pic +=  fileName + "&";
                 } else {
                     fileName = "";
                 }
+            }
+            if (pic.equals("")) {
+                pic = request.getParameter("txtPicture2");
             }
             int pro_id = Integer.parseInt(request.getParameter("hiddenID"));
             String name = request.getParameter("txtName");
