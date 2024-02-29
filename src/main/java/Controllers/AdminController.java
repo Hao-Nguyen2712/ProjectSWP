@@ -12,6 +12,7 @@ import Models.Kit;
 import Models.Mouse;
 import Models.Product;
 import Models.Switch;
+import MyUtils.Excel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -24,6 +25,16 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.util.Date;
 import java.util.Collection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -44,7 +55,7 @@ public class AdminController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -159,6 +170,75 @@ public class AdminController extends HttpServlet {
                 response.sendRedirect("/AdminController/ListProduct");
             }
             request.getRequestDispatcher("/View/Main/editProduct.jsp").forward(request, response);
+        } else if (path.endsWith("/AdminController/StatisticsDay")) {
+            request.getRequestDispatcher("/View/Main/statisticDay.jsp").forward(request, response);
+        } else if (path.endsWith("/AdminController/StatisticsMonth")) {
+            request.getRequestDispatcher("/View/Main/statisticMonth.jsp").forward(request, response);
+        } else if (path.endsWith("/AdminController/StatisticsYear")) {
+            request.getRequestDispatcher("/View/Main/statisticYear.jsp").forward(request, response);
+        } else if (path.endsWith("/AdminController/Export")) {
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setHeader("Content-Disposition", "attachment;filename=List.xlsx");
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("List");
+            ArrayList<Excel> list = new ArrayList<>();
+
+            ResultSet rs = (ResultSet) session.getAttribute("Result2");
+            Excel excel = new Excel();
+            try {
+                while (rs.next()) {
+                    excel = new Excel(rs.getInt("user_id"), rs.getString("user_fullname"), rs.getString("pro_name"), rs.getInt("od_quantity"), rs.getInt("order_totalMoney"), rs.getDate("order_date").toString());
+                    list.add(excel);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            int rowNo = 0;
+            Row row = sheet.createRow(rowNo++);
+            int cellNum = 0;
+            Cell cell = row.createCell(cellNum++);
+            cell.setCellValue("ID");
+
+            cell = row.createCell(cellNum++);
+            cell.setCellValue("Name");
+
+            cell = row.createCell(cellNum++);
+            cell.setCellValue("Product");
+
+            cell = row.createCell(cellNum++);
+            cell.setCellValue("Quantity");
+
+            cell = row.createCell(cellNum++);
+            cell.setCellValue("Total Money");
+
+            cell = row.createCell(cellNum++);
+            cell.setCellValue("Date");
+
+            for (Excel e : list) {
+                cellNum = 0;
+                row = sheet.createRow(rowNo++);
+                cell = row.createCell(cellNum++);
+                cell.setCellValue(e.getUser_Id());
+
+                cell = row.createCell(cellNum++);
+                cell.setCellValue(e.getUser_Fullname());
+
+                cell = row.createCell(cellNum++);
+                cell.setCellValue(e.getPro_name());
+
+                cell = row.createCell(cellNum++);
+                cell.setCellValue(e.getOd_quantity());
+
+                cell = row.createCell(cellNum++);
+                cell.setCellValue(e.getOrder_totalMoney());
+
+                cell = row.createCell(cellNum++);
+                cell.setCellValue(e.getOrder_Date());
+
+            }
+            workbook.write(response.getOutputStream());
+            workbook.close();
+
         }
     }
 
@@ -447,6 +527,36 @@ public class AdminController extends HttpServlet {
                         break;
                 }
             }
+        }
+        if (request.getParameter("btnSubmitForDay") != null) {
+            String date = request.getParameter("dates");
+            ProductDAO cDaos = new ProductDAO();
+            ResultSet rs = cDaos.getProductToStatics(date);
+            ResultSet rs2 = cDaos.getProductToStatics(date);
+            HttpSession session = request.getSession();
+            session.setAttribute("Result", rs);
+            session.setAttribute("Result2", rs2);
+            response.sendRedirect("/AdminController/StatisticsDay");
+        }
+        if (request.getParameter("btnSubmitForMonth") != null) {
+            String month = request.getParameter("month");
+            ProductDAO cDaos = new ProductDAO();
+            ResultSet rs = cDaos.getProductToStaticsForMonth(month);
+            ResultSet rs2 = cDaos.getProductToStaticsForMonth(month);
+            HttpSession session = request.getSession();
+            session.setAttribute("ResultMonth", rs);
+            session.setAttribute("Result2", rs2);
+            response.sendRedirect("/AdminController/StatisticsMonth");
+        }
+        if (request.getParameter("btnSubmitForYear") != null) {
+            String year = request.getParameter("year");
+            ProductDAO cDaos = new ProductDAO();
+            ResultSet rs = cDaos.getProductToStaticsForYear(year);
+            ResultSet rs2 = cDaos.getProductToStaticsForYear(year);
+            HttpSession session = request.getSession();
+            session.setAttribute("ResultYear", rs);
+            session.setAttribute("Result2", rs2);
+            response.sendRedirect("/AdminController/StatisticsYear");
         }
     }
 

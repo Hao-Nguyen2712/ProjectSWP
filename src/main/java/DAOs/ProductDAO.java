@@ -491,8 +491,6 @@ public class ProductDAO {
         return rs;
     }
 
-    
-
     public ResultSet getSimilarProduct(String category, int pro_id) {
         ResultSet rs = null;
         try {
@@ -505,7 +503,6 @@ public class ProductDAO {
         }
         return rs;
     }
-
 
     public boolean addCard(int id, int quantity, String username) {
         int count = 0;
@@ -552,7 +549,6 @@ public class ProductDAO {
         }
         return quantity;
     }
-
 
     public Product getProduct(int pro_id) {
         Product pro = null;
@@ -606,7 +602,7 @@ public class ProductDAO {
         }
         return rs;
     }
-    
+
     public ResultSet get2NewProduct() {
         ResultSet rs = null;
 
@@ -619,6 +615,65 @@ public class ProductDAO {
         }
         return rs;
     }
-    
-    
+
+    public ResultSet getProductToStatics(String str) {
+        ResultSet rs = null;
+        try {
+            Date date = Date.valueOf(str);
+            PreparedStatement ps = conn.prepareStatement("SELECT o.user_id ,u.user_fullname,p.pro_name,od.od_quantity, o.order_totalMoney, o.order_date\n"
+                    + "FROM Order_details od \n"
+                    + "join Orders o on od.order_id = o.order_id\n"
+                    + "join \"User\" u  on u.user_id =  o.user_id\n"
+                    + "join Cart c on c.user_id =  o.user_id\n"
+                    + "join Product p on p.pro_id = c.pro_id\n"
+                    + "where o.order_date = ? and o.order_status ='Accept'");
+            ps.setDate(1, date);
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return rs;
+    }
+
+    public ResultSet getProductToStaticsForMonth(String str) {
+        ResultSet rs = null;
+        try {
+            int month = Integer.parseInt(str);
+
+            PreparedStatement ps = conn.prepareStatement("SELECT o.user_id ,u.user_fullname,p.pro_name,od.od_quantity, o.order_totalMoney, o.order_date\n"
+                    + "FROM Order_details od join Orders o on od.order_id = o.order_id\n"
+                    + "join \"User\" u  on u.user_id =  o.user_id\n"
+                    + "join Cart c on c.user_id =  o.user_id\n"
+                    + "join Product p on p.pro_id = c.pro_id\n"
+                    + "where MONTH(order_date) = ? and o.order_status ='Accept'");
+            ps.setInt(1, month);
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return rs;
+    }
+
+    public ResultSet getProductToStaticsForYear(String str) {
+        ResultSet rs = null;
+        try {
+            int month = Integer.parseInt(str);
+
+            PreparedStatement ps = conn.prepareStatement("SELECT o.user_id ,u.user_fullname,p.pro_name,od.od_quantity, o.order_totalMoney, o.order_date\n"
+                    + "FROM Order_details od join Orders o on od.order_id = o.order_id\n"
+                    + "join \"User\" u  on u.user_id =  o.user_id\n"
+                    + "join Cart c on c.user_id =  o.user_id\n"
+                    + "join Product p on p.pro_id = c.pro_id\n"
+                    + "where YEAR(order_date) = ? and o.order_status ='Accept'");
+            ps.setInt(1, month);
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return rs;
+    }
+
 }
