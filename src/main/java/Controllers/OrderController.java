@@ -72,6 +72,8 @@ public class OrderController extends HttpServlet {
         String path = request.getRequestURI();
         if (path.endsWith("/OrderController/Order")) {
             request.getRequestDispatcher("/View/Main/order.jsp").forward(request, response);
+        } else if (path.endsWith("/OrderController/Order-History")) {
+            request.getRequestDispatcher("/View/Main/order_history.jsp").forward(request, response);
         }
     }
 

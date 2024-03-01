@@ -4,6 +4,7 @@
  */
 package Controllers;
 
+import DAOs.OrderDAO;
 import DAOs.ProductDAO;
 import Models.Earphone;
 import Models.Keyboard;
@@ -55,7 +56,7 @@ public class AdminController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -83,14 +84,29 @@ public class AdminController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String path = request.getRequestURI();
-        if (path.endsWith("/AdminController/ListProduct")) {
+        if (path.endsWith("/AdminController/Confirm-Order")) {
+            request.getRequestDispatcher("/View/Main/confirm_order.jsp").forward(request, response);
+        } else if (path.startsWith("/AdminController/Accept-Order/")) {
+            String[] s = path.split("/");
+            int order_id = Integer.parseInt(s[s.length - 1]);
+            OrderDAO orderDAO = new OrderDAO();
+            orderDAO.acceptOrder(order_id);
+            session.setAttribute("status", "success");
+            response.sendRedirect("/AdminController/Confirm-Order");
+        } else if (path.startsWith("/AdminController/Reject-Order/")) {
+            String[] s = path.split("/");
+            int order_id = Integer.parseInt(s[s.length - 1]);
+            OrderDAO orderDAO = new OrderDAO();
+            orderDAO.rejectOrder(order_id);
+            session.setAttribute("status", "success");
+            response.sendRedirect("/AdminController/Confirm-Order");
+        } else if (path.endsWith("/AdminController/ListProduct")) {
             request.getRequestDispatcher("/View/Main/listProduct.jsp").forward(request, response);
         } else if (path.startsWith("/AdminController/ListProduct/Create")) {
             request.getRequestDispatcher("/View/Main/addProduct.jsp").forward(request, response);
-        }else if (path.startsWith("/AdminController/Thanks")) {
+        } else if (path.startsWith("/AdminController/Thanks")) {
             request.getRequestDispatcher("/View/Main/thanks.jsp").forward(request, response);
-        }  
-        else if (path.startsWith("/AdminController/ListProduct/Delete")) {
+        } else if (path.startsWith("/AdminController/ListProduct/Delete")) {
             String[] s = path.split("/");
             try {
                 int id = Integer.parseInt(s[s.length - 1]);
@@ -262,7 +278,7 @@ public class AdminController extends HttpServlet {
                 String fileName = part.getSubmittedFileName();
                 if (fileName != null && !fileName.isEmpty()) {
                     part.write(uploadPath + File.separator + fileName);
-                    pic +=  fileName + "&";
+                    pic += fileName + "&";
 
                 } else {
                     fileName = "";
@@ -392,7 +408,7 @@ public class AdminController extends HttpServlet {
                 String fileName = part.getSubmittedFileName();
                 if (fileName != null && !fileName.isEmpty()) {
                     part.write(uploadPath + File.separator + fileName);
-                    pic +=  fileName + "&";
+                    pic += fileName + "&";
                 } else {
                     fileName = "";
                 }

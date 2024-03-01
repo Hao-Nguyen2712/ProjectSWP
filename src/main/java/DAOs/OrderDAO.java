@@ -84,4 +84,64 @@ public class OrderDAO {
 
         return (count == 0) ? null : order;
     }
+
+    public ResultSet getAllOrderWithStatus(String status) {
+        ResultSet rs = null;
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from Orders o join Order_details od on o.order_id = od.order_id where o.order_status=?");
+            ps.setString(1, status);
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
+
+    public ResultSet getAllOrderWithUserID(int user_id) {
+        ResultSet rs = null;
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from Orders o join Order_details od on o.order_id = od.order_id where o.user_id=?");
+            ps.setInt(1, user_id);
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
+
+    public ResultSet getAllOrderWithID(int id) {
+        ResultSet rs = null;
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from Orders o join Order_details od on o.order_id = od.order_id where o.order_id=?");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
+
+    public void acceptOrder(int order_id) {
+        ResultSet rs = null;
+        try {
+            PreparedStatement ps = conn.prepareStatement("update Orders set order_status='Accept' where order_id=?");
+            ps.setInt(1, order_id);
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void rejectOrder(int order_id) {
+        ResultSet rs = null;
+        try {
+            PreparedStatement ps = conn.prepareStatement("update Orders set order_status='Reject' where order_id=?");
+            ps.setInt(1, order_id);
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }

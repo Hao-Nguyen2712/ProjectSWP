@@ -87,7 +87,7 @@
                                                     <a href="/HomeController/User/Edit" class="btn btn-logout text-white text-end me-3 border-0" style="float: right;">Sửa thông tin</a>
                                                 </div>
                                                 <div class=" mb-3">
-                                                    <a href="/HomeController/Order-List" class="btn btn-logout text-white text-end me-3 border-0" style="float: right;">Lịch sử mua hàng</a>
+                                                    <a href="/OrderController/Order-History" class="btn btn-logout text-white text-end me-3 border-0" style="float: right;">Lịch sử mua hàng</a>
                                                 </div>
                                                 <div class=" mb-3">
                                                     <a href="/AccountController/ChangePassword" class="btn btn-logout text-white text-end me-3 border-0" style="float: right;">Thay đổi mật khẩu</a>

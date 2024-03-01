@@ -49,12 +49,12 @@
                             </div>
                             <div class="describe_content-body">
                                 <ul>
-                                    <li><a href="#">Keyboard</a></li>
-                                    <li><a href="#">Kit bàn phím</a></li>
-                                    <li><a href="#">Mouse</a></li>
-                                    <li><a href="#">Keycap</a></li>
-                                    <li><a href="#">Switch</a></li>
-                                    <li><a href="#">Phụ kiện</a></li>
+                                    <li><a href="/ProductController/Keyboard">Keyboard</a></li>
+                                    <li><a href="/ProductController/Kit-ban-phim">Kit bàn phím</a></li>
+                                    <li><a href="/ProductController/Mouse">Mouse</a></li>
+                                    <li><a href="/ProductController/Keycap">Keycap</a></li>
+                                    <li><a href="/ProductController/Switch">Switch</a></li>
+                                    <li><a href="/ProductController/Earphone">Earphone</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -117,6 +117,6 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-        <script src="/Front/assets/js/slick.js"></script>
+        <script src="../../Root/Js//slick.js"></script>
     </body>
 </html>
