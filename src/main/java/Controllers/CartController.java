@@ -6,8 +6,11 @@ package Controllers;
 
 import DAOs.AccountDAO;
 import DAOs.CartDAO;
+import DAOs.KeyboardDAO;
+import DAOs.ProductDAO;
 import DAOs.UserDAO;
 import Models.Account;
+import Models.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -95,7 +98,19 @@ public class CartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+
+        // Thực hiện cập nhật trong cơ sở dữ liệu
+        CartDAO cDAO = new CartDAO();
+        cDAO.updateQuantityProductInCartPage(quantity, productId, userId);
+        KeyboardDAO kDAO = new KeyboardDAO();
+        ProductDAO pDAO = new ProductDAO();
+        Product pro = pDAO.getProductByID(productId);
+        response.setContentType("text/plain");
+        String money = kDAO.converterNumber(Integer.parseInt(pro.getPro_price()) * quantity);
+        response.getWriter().write(money);
     }
 
     /**

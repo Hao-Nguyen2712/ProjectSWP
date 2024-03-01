@@ -8,6 +8,7 @@ import DAOs.AccountDAO;
 import DAOs.UserDAO;
 import Models.Account;
 import Models.User;
+import MyUtils.MD5;
 import MyUtils.SendEmail;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -67,6 +68,8 @@ public class AccountController extends HttpServlet {
             request.getRequestDispatcher("/View/Main/resetPassword.jsp").forward(request, response);
         } else if (part.endsWith("rePassword")) {
             request.getRequestDispatcher("/View/Main/enterPassword.jsp").forward(request, response);
+        } else if (part.endsWith("ChangePassword")) {
+            request.getRequestDispatcher("/View/Main/changePassword.jsp").forward(request, response);
         }
     }
 
@@ -83,10 +86,10 @@ public class AccountController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         AccountDAO aDAO = new AccountDAO();
+        UserDAO uDAO = new UserDAO();
 
         if (request.getParameter("btnEmail") != null) {
             String email = request.getParameter("email");
-            UserDAO uDAO = new UserDAO();
             Account account = aDAO.getAccount(email);
             if (account != null) {
                 User user = uDAO.getUser(email);
@@ -109,12 +112,25 @@ public class AccountController extends HttpServlet {
         if (request.getParameter("btnConfirm") != null) {
             int code = (int) session.getAttribute("code");
             int codeConfirm = Integer.parseInt(request.getParameter("code"));
-            if (code == codeConfirm) {
-                response.sendRedirect("/AccountController/rePassword");
+
+            String check = request.getParameter("check");
+            if (check.equals("rePassword")) {
+                if (code == codeConfirm) {
+                    response.sendRedirect("/AccountController/rePassword");
+                } else {
+                    session.setAttribute("status", "error");
+                    response.sendRedirect("/AccountController/Confirm");
+                }
             } else {
-                session.setAttribute("status", "error");
-                response.sendRedirect("//Confirm");
+                if (code == codeConfirm) {
+                    session.setAttribute("status", "success");
+                    response.sendRedirect("/HomeController/User");
+                } else {
+                    session.setAttribute("status", "error");
+                    response.sendRedirect("/AccountController/Confirm");
+                }
             }
+
         }
 
         if (request.getParameter("btnPassword") != null) {
@@ -128,6 +144,28 @@ public class AccountController extends HttpServlet {
             } else {
                 response.sendRedirect("/AccountController/rePassword");
             }
+        }
+
+        if (request.getParameter("btnChangePassword") != null) {
+            Account acc = (Account) session.getAttribute("account");
+            String password = request.getParameter("oldPassword");
+            String pass_hash = MD5.getMd5(password);
+
+            if (pass_hash.endsWith(acc.getPassword())) {
+                User user = uDAO.getUser(acc.getEmail());
+                Random random = new Random();
+                int ranNumber = random.nextInt(999999 - 100000 + 1) + 100000;
+                SendEmail mail = new SendEmail();
+                String formEmail = mail.formVerifyEmail(ranNumber, user.getUser_fullName());
+                SendEmail.sendEmail(acc.getEmail(), "Verify email", formEmail);
+                session.setAttribute("code", ranNumber);
+                session.setAttribute("action", "AccountController");
+                request.getRequestDispatcher("/View/Main/confirm.jsp").forward(request, response);
+            } else {
+                session.setAttribute("status", "error");
+                response.sendRedirect("/AccountController/ChangePassword");
+            }
+
         }
     }
 

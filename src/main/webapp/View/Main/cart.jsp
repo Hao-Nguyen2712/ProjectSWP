@@ -116,7 +116,7 @@
                                     <td class="tableItemThird">
                                         <a class="productContent ItemProduct" href=""><%= pro.getPro_name() %></a>
                                     </td>
-                                    <td class="ItemProduct1">
+                                    <td class="ItemProduct">
                                         <span>
                                             <%= kDAO.converterNumber(Integer.parseInt(pro.getPro_price()))%>
                                         </span>
@@ -125,14 +125,14 @@
                                         <div class="d-flex ItemProduct" style="width: 100px; text-align: center">
                                             <span>
                                                 <div class="input-group mb-1" style="width: 100px;">
-                                                    <button class="btn btn-white border border-secondary px-1" type="button" id="button-addon1_<%= count %>"
+                                                    <button class="btn-minus btn btn-white border border-secondary px-1" type="button" id="button-addon1_<%= count %>" data-proid="<%= pro.getPro_id() %>"
                                                             data-mdb-ripple-color="dark">
                                                         <i class="fas fa-minus"></i>
                                                     </button>
-                                                    <input type="number" name="txtQuantity" class="form-control text-center border border-secondary" value="<%=cart.getCart_quantity() %>"
+                                                    <input type="number" name="txtQuantity" class="form-control text-center border border-secondary quantity-input" value="<%=cart.getCart_quantity() %>"
                                                            placeholder="1" aria-label="Example text with button addon" aria-describedby="button-addon1"
-                                                           id="quantityInput_<%= count %>" readonly style="width: 50px" />
-                                                    <button class="btn btn-white border border-secondary px-1" type="button" id="button-addon2_<%= count %>"
+                                                           id="quantityInput_<%= count %>" data-proid="<%= pro.getPro_id() %>"  readonly style="width: 50px" />
+                                                    <button class="btn-plus btn btn-white border border-secondary px-1" type="button" id="button-addon2_<%= count %>" data-proid="<%= pro.getPro_id() %>"
                                                             data-mdb-ripple-color="dark">
                                                         <i class="fas fa-plus"></i>
                                                     </button>
@@ -140,7 +140,7 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td class="ItemProduct1">
+                                    <td class=" ItemProduct1" data-proid="<%= pro.getPro_id() %>" >
                                         <span>
                                             <%
                                                 totalMoney += cart.getCart_quantity() * Integer.parseInt(pro.getPro_price());
@@ -247,61 +247,89 @@
         <script src="../../Root/Js/script.js"></script>
         <script src="../../Root/Js/main.js"></script>
         <script src="../../Root/Js/notification.js"></script>
+
         <script>
-            <%
-            ResultSet rs_sc = cDAO.getProductInCart(user_id);
-            int count = 0;
-            int pro_id=0;
-            while(rs_sc.next())     {                     
-                pro_id = rs_sc.getInt("pro_id");
-                count++;
-                        
-            %>
-            var quantityInput_<%=count%> = document.getElementById("quantityInput_" +<%= count%>);
-            var addButton_<%=count%> = document.getElementById("button-addon2_" + <%= count%>);
-            var minusButton_<%=count%> = document.getElementById("button-addon1_" + <%= count%>);
-
-            addButton_<%=count%>.addEventListener('click', function () {
-                quantityInput_<%=count%>.value = parseInt(quantityInput_<%=count%>.value) + 1;
-                quantityInput_<%=count%>.placeholder = quantityInput_<%=count%>.value
-
-
-            });
-            minusButton_<%=count%>.addEventListener('click', function () {
-                var currentValue = parseInt(quantityInput_<%=count%>.value);
-                if (currentValue > 1) {
-                    quantityInput_<%=count%>.value = currentValue - 1;
-                }
-                quantityInput_<%=count%>.placeholder = quantityInput_<%=count%>.value
-
-            });
             $(document).ready(function () {
-                if (quantityInput_<%=count%>.value < 0) {
-                    quantityInput_<%=count%>.value = 1;
-                    quantityInput_<%=count%>.placeholder = 1;
-                }
-            })
-            <%
-            }
-            %>
+                $(".btn-plus, .btn-minus").on("click", function () {
+                    var btn = $(this);
+                    var productId = btn.data("proid");
+                    var inputField = $(".quantity-input[data-proid='" + productId + "']");
+                    var currentQuantity = parseInt(inputField.val());
 
+                    if (btn.hasClass("btn-plus")) {
+                        inputField.val(currentQuantity + 1);
+                    } else {
+                        if (currentQuantity > 1) {
+                            inputField.val(currentQuantity - 1);
+                        }
+                    }
+
+                    var newQuantity = inputField.val();
+
+                    // Thực hiện yêu cầu AJAX để cập nhật số lượng trong cơ sở dữ liệu
+                    $.ajax({
+                        type: "POST",
+                        url: "/CartController",
+                        data: {
+                            userId: <%= user_id %>,
+                            productId: productId,
+                            quantity: newQuantity
+                        },
+                        success: function (response) {
+                            $(".ItemProduct1[data-proid='" + productId + "'] span").text(response); // Cập nhật số tiền tạm tính
+                            updateMoney();
+                        },
+                        error: function () {
+                            // Xử lý lỗi nếu cần
+                        }
+                    });
+                });
+
+                function updateMoney() {
+                    var beforeMoeny = 0;
+                    $(".listBodyProduct tr").each(function () {
+                        var price = ($(this).find(".ItemProduct1 span").text());
+                        var stringPrice = price.replace(/,/g, "");
+                        var intPrice = parseInt(stringPrice);
+                        console.log(stringPrice)
+                        // Tính tổng tiền
+                        beforeMoeny += intPrice;
+                    });
+
+                    var totalMoney = beforeMoeny + 20000;
+                    $(".before").text(converterNumber(beforeMoeny)); // Cập nhật số tiền tạm tính
+                    $(".final").text(converterNumber(totalMoney)); // Cập nhật số tiền tạm tính
+
+                }
+                
+                function converterNumber(number) {
+                    const formatter = new Intl.NumberFormat('en-US', {
+                        style: 'decimal',
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0
+                    });
+
+                    return formatter.format(number);
+                }
+
+            });
         </script>
 
 
         <%
             String mesg = (String) session.getAttribute("status");
         %>
-        < script >
-        createToast("<%= mesg%>")
-    </script>
+        <script>
+            createToast("<%= mesg%>")
+        </script>
 
-    <%
-        session.setAttribute("status", "");
-    %>
-
-
+        <%
+            session.setAttribute("status", "");
+        %>
 
 
 
-</body>
+
+
+    </body>
 </html>

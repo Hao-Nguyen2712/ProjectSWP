@@ -85,4 +85,18 @@ public class UserDAO {
         }
         return user_id;
     }
+    public User getUserByAcc_id(int acc_id) {
+        User user = null;
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from [user] where acc_id= ?");
+            ps.setInt(1, acc_id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                user = new User(rs.getInt("user_id"),rs.getString("user_fullname"),rs.getString("user_sdt"),rs.getString("user_address"), rs.getInt("acc_id"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
 }

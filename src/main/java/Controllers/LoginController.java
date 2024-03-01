@@ -65,9 +65,9 @@ public class LoginController extends HttpServlet {
             session.setAttribute("account", account);
             response.sendRedirect("index.jsp");
         }
-
+        
     }
-
+    
     public static String getToken(String code) throws ClientProtocolException, IOException {
         // call api to get token
         String response = Request.Post(Constants.GOOGLE_LINK_GET_TOKEN)
@@ -76,17 +76,17 @@ public class LoginController extends HttpServlet {
                         .add("redirect_uri", Constants.GOOGLE_REDIRECT_URI).add("code", code)
                         .add("grant_type", Constants.GOOGLE_GRANT_TYPE).build())
                 .execute().returnContent().asString();
-
+        
         JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
         String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
         return accessToken;
     }
-
+    
     public static Account getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
         String link = Constants.GOOGLE_LINK_GET_USER_INFO + accessToken;
         String response = Request.Get(link).execute().returnContent().asString();
         Account googlePojo = new Gson().fromJson(response, Account.class);
-
+        
         return googlePojo;
     }
 
@@ -112,10 +112,22 @@ public class LoginController extends HttpServlet {
             request.getRequestDispatcher("/View/Main/confirm.jsp").forward(request, response);
         } else if (part.endsWith("Restpassword")) {
             request.getRequestDispatcher("/View/Main/resetPassword.jsp").forward(request, response);
+        } else if (part.endsWith("Logout")) {
+            Cookie[] clist = request.getCookies();
+            for (int i = 0; i < clist.length; i++) {
+                if (clist[i].getName().equals("login")) {
+                    clist[i].setPath("/");
+                    clist[i].setMaxAge(0);
+                    response.addCookie(clist[i]);
+                    break;
+                }
+            }
+            session.setAttribute("account", null);
+            response.sendRedirect("/");
         } else {
             processRequest(request, response);
         }
-
+        
     }
 
     /**
@@ -131,7 +143,7 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         AccountDAO aDAO = new AccountDAO();
-
+        
         if (request.getParameter("btnLogin") != null) {
             String gmail = request.getParameter("gmail");
             String password = request.getAttribute("password").toString();
@@ -141,7 +153,7 @@ public class LoginController extends HttpServlet {
                 cookie.setMaxAge(3 * 24 * 60 * 60);
                 cookie.setPath("/");
                 response.addCookie(cookie);
-
+                
                 session.setAttribute("account", acc);
                 response.sendRedirect("/");
             } else {
@@ -149,23 +161,23 @@ public class LoginController extends HttpServlet {
                 response.sendRedirect("/LoginController/login");
             }
         }
-
+        
         if (request.getParameter("btnSignUP") != null) {
             String email = request.getParameter("email");
             String password = request.getAttribute("password").toString();
             String fulName = request.getParameter("fullName");
             String address = request.getParameter("address");
             String phone = request.getParameter("phone");
-
+            
             boolean flag = aDAO.checkSignIn(email);
             if (!flag) {
                 session.setAttribute("status", "ErrorSignIn");
                 response.sendRedirect("/LoginController/Signup");
             } else {
-
+                
                 Account account = new Account(0, email, password);
                 User user = new User(0, fulName, phone, address, 0);
-
+                
                 Random random = new Random();
                 int ranNumber = random.nextInt(999999 - 100000 + 1) + 100000;
                 SendEmail mail = new SendEmail();
@@ -177,14 +189,14 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("status", "success");
                 session.setAttribute("action", "btnConfirm");
                 request.getRequestDispatcher("/View/Main/confirm.jsp").forward(request, response);
-
+                
             }
         }
-
+        
         if (request.getParameter("btnConfirm") != null) {
             Account acc = (Account) session.getAttribute("account");
             User user = (User) session.getAttribute("user");
-
+            
             int code = (int) session.getAttribute("code");
             int codeConfirm = Integer.parseInt(request.getParameter("code"));
             if (code == codeConfirm) {
@@ -212,7 +224,7 @@ public class LoginController extends HttpServlet {
                 response.sendRedirect("/LoginController/Confirm");
             }
         }
-
+        
         if (request.getParameter("btnReset") != null) {
             String email = request.getParameter("email");
             UserDAO uDAO = new UserDAO();
@@ -234,7 +246,7 @@ public class LoginController extends HttpServlet {
                 response.sendRedirect("AccountController/Restpassword");
             }
         }
-
+        
     }
 
     /**

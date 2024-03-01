@@ -4,20 +4,18 @@
  */
 package Controllers;
 
-import Models.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author nguye
  */
-public class HomeController extends HttpServlet {
+public class ErrorController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +34,10 @@ public class HomeController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeController</title>");            
+            out.println("<title>Servlet ErrorController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ErrorController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,15 +55,7 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String path = request.getRequestURI();
-        if (path.endsWith("User")) {
-            Account acc = (Account) session.getAttribute("account");
-            if (acc != null) {
-                request.getRequestDispatcher("/View/Main/user.jsp").forward(request, response);
-            }
-            response.sendRedirect("/ErrorController");
-        }
+        request.getRequestDispatcher("/View/Main/error.jsp").forward(request, response);
     }
 
     /**
